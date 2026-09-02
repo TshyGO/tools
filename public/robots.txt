@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://19991107.xyz/sitemap-index.xml

@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolEntry from '../components/ToolEntry.astro';
+import { tools } from '../data/tools';
+---
+
+<BaseLayout
+  title="Peter's Tools｜免费、开源的小工具"
+  description="一些免费、开源、自己也在用的小工具。从简历灵填助手开始，把重复的小麻烦变简单。"
+>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Peter's Tools 首页">
+      <span class="brand__mark">PT</span>
+      <span>Peter's Tools</span>
+    </a>
+    <nav aria-label="主导航">
+      <a href="#directory">工具目录</a>
+      <a href="https://github.com/TshyGO/tools" target="_blank" rel="noreferrer">GitHub ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__grain" aria-hidden="true"></div>
+      <div class="hero__copy">
+        <p class="kicker hero-enter">A small collection, built with care.</p>
+        <h1 id="hero-title" class="hero-enter">把麻烦，<br /><em>变顺手。</em></h1>
+        <p class="hero__intro hero-enter">一些免费、开源、自己也在用的小工具。先从网申这件小事开始。</p>
+        <a class="hero__cta hero-enter" href="#directory">
+          浏览工具目录
+          <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+
+      <div class="hero__visual" aria-hidden="true">
+        <div class="orbit orbit--outer"></div>
+        <div class="orbit orbit--inner"></div>
+        <span class="hero__number">01</span>
+        <span class="hero__label">TOOL<br />AVAILABLE</span>
+        <span class="hero__spark">✦</span>
+      </div>
+
+      <div class="hero__foot">
+        <span>19991107.xyz</span>
+        <span>Made by Peter · 2026</span>
+      </div>
+    </section>
+
+    <section class="directory" id="directory" aria-labelledby="directory-title">
+      <div class="section-heading reveal">
+        <div>
+          <p class="kicker">Directory / 目录</p>
+          <h2 id="directory-title">现在可以用的工具</h2>
+        </div>
+        <p>每个项目都有自己的详情、下载和使用说明。目录会随着真实需求慢慢生长。</p>
+      </div>
+
+      <div class="tool-list">
+        {tools.map((tool) => <ToolEntry tool={tool} />)}
+      </div>
+
+      <div class="directory__note reveal">
+        <span class="directory__plus" aria-hidden="true">＋</span>
+        <div>
+          <strong>这里刚刚开始。</strong>
+          <p>PDF、Excel、科研计算和更多 AI 小工具，会在真正需要时陆续加入。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand" href="/">
+      <span class="brand__mark">PT</span>
+      <span>Peter's Tools</span>
+    </a>
+    <p>免费使用，开源优先。</p>
+    <a href="https://github.com/TshyGO/tools/issues" target="_blank" rel="noreferrer">反馈问题 ↗</a>
+  </footer>
+
+  <script>
+    const root = document.documentElement;
+    window.addEventListener('pointermove', (event) => {
+      root.style.setProperty('--pointer-x', `${event.clientX}px`);
+      root.style.setProperty('--pointer-y', `${event.clientY}px`);
+    }, { passive: true });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.18 });
+
+    document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+  </script>
+</BaseLayout>
