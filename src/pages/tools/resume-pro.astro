@@ -1,22 +1,109 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const releaseUrl = 'https://github.com/TshyGO/resume-form-assistant-plugin/releases/latest';
+const sourceUrl = 'https://github.com/TshyGO/resume-form-assistant-plugin';
+const issuesUrl = 'https://github.com/TshyGO/resume-form-assistant-plugin/issues';
 ---
 
 <BaseLayout
-  title="简历灵填助手 Resume Pro｜Peter's Tools"
-  description="用 AI 读懂简历，辅助完成重复的网申表单填写。完整详情与使用教程正在整理中。"
+  title="简历灵填助手 Resume Pro｜PeterKit"
+  description="Chrome / Edge 插件。读取 Excel 简历模板，打开网申页面后一键匹配填写表单字段。"
 >
-  <main class="placeholder-page">
-    <a class="placeholder-page__back" href="/">← 返回工具目录</a>
-    <div class="placeholder-page__content">
-      <p class="kicker">Tool 01 / Resume Pro</p>
-      <h1>简历灵填助手</h1>
-      <p>用 AI 读懂简历，把重复的网申填写变成更顺手的一步。</p>
-      <div class="placeholder-page__actions">
-        <a class="button button--primary" href="https://github.com/TshyGO/resume-form-assistant-plugin/releases/latest" target="_blank" rel="noreferrer">下载最新版 ↗</a>
-        <a class="button" href="https://github.com/TshyGO/resume-form-assistant-plugin" target="_blank" rel="noreferrer">查看源码 ↗</a>
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="brand__mark">PK</span>
+      <span>PeterKit</span>
+    </a>
+    <nav>
+      <a href={sourceUrl} target="_blank" rel="noreferrer">GitHub</a>
+      <a href={issuesUrl} target="_blank" rel="noreferrer">反馈</a>
+    </nav>
+  </header>
+
+  <main class="page page--tool">
+    <a class="crumb" href="/">← 工具目录</a>
+
+    <header class="tool-head">
+      <div class="tool-head__tags">
+        <span class="tag">Chrome / Edge 插件</span>
+        <span class="status">现已开放</span>
       </div>
-      <p class="placeholder-page__note">完整介绍、安装教程和常见问题将在下一步补齐。</p>
-    </div>
+      <h1>简历灵填助手 Resume Pro</h1>
+      <p class="tool-head__desc">把简历信息存成 Excel，打开招聘网站的网申页面，点「一键 AI 填写」，插件读取表单并匹配姓名、手机号、邮箱、学校、专业等字段。免费开源，AI 功能需要自己配置接口。</p>
+      <div class="tool-head__actions">
+        <a class="button button--primary" href={releaseUrl} target="_blank" rel="noreferrer">下载最新版 ↗</a>
+        <a class="button" href={sourceUrl} target="_blank" rel="noreferrer">查看源码 ↗</a>
+      </div>
+    </header>
+
+    <figure class="tool-shot">
+      <img src="/screenshots/fill.webp" alt="侧边栏在网申表单页面上一键 AI 填写" loading="lazy" />
+      <figcaption>网申页面打开后，插件在右侧显示当前模板和填写进度，已填字段会短暂高亮。</figcaption>
+    </figure>
+
+    <section aria-labelledby="install-h">
+      <h2 id="install-h">安装</h2>
+      <ol class="steps">
+        <li><p><b>下载并解压。</b>从 <a href={releaseUrl} target="_blank" rel="noreferrer">Releases</a> 下载 <code>resume-pro-*.zip</code>，解压到一个固定文件夹(例如 <code>D:\Tools\ResumePro</code>)，之后不要删除或移动。</p></li>
+        <li><p><b>打开扩展页。</b>Chrome 地址栏输入 <code>chrome://extensions</code>,Edge 输入 <code>edge://extensions</code>。</p></li>
+        <li><p><b>加载扩展。</b>打开右上角「开发者模式」→「加载已解压的扩展程序」→ 选中带 <code>manifest.json</code> 的那层文件夹。</p></li>
+        <li><p><b>固定到工具栏。</b>扩展列表出现 Resume Pro 后，点浏览器工具栏的扩展按钮把它固定。已打开的网申页面刷新一次生效。</p></li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="config-h">
+      <h2 id="config-h">配置 AI 接口</h2>
+      <p class="section-lead">点击浏览器工具栏的 Resume Pro 图标，打开管理面板的「AI 配置」标签。需要一个 OpenAI 兼容接口:</p>
+      <ol class="steps">
+        <li><p><b>API URL。</b>形如 <code>https://api.openai.com/v1/chat/completions</code>，填你自己接口服务商给的地址。</p></li>
+        <li><p><b>模型名称。</b>例如 <code>gpt-4o-mini</code>，按服务商支持的模型填写。</p></li>
+        <li><p><b>API Key。</b>接口的访问密钥，保存后只存在本地浏览器，不会上传到插件作者的服务器。</p></li>
+      </ol>
+      <figure class="tool-shot tool-shot--inline">
+        <img src="/screenshots/ai-config.webp" alt="管理面板的 AI 配置标签" loading="lazy" />
+        <figcaption>接口是否收费、额度多少，取决于你使用的模型服务商，和插件本身无关。</figcaption>
+      </figure>
+    </section>
+
+    <section aria-labelledby="import-h">
+      <h2 id="import-h">导入简历</h2>
+      <ol class="steps">
+        <li><p><b>已有 Excel 模板。</b>在「模板管理」标签点「导入 Excel」直接选文件。</p></li>
+        <li><p><b>只有 PDF / Word / TXT。</b>点「AI 解析简历」，把文件拖进去，AI 会提取信息生成 Excel——生成后建议打开检查一遍再导入。</p></li>
+        <li><p><b>多套简历。</b>支持同时保存多个模板，按投递岗位切换「当前使用中」的那一个。</p></li>
+      </ol>
+      <figure class="tool-shot tool-shot--inline">
+        <img src="/screenshots/templates.webp" alt="管理面板的模板管理标签" loading="lazy" />
+        <figcaption>每个模板显示分组和字段数，随时可以重新导入或删除。</figcaption>
+      </figure>
+    </section>
+
+    <section aria-labelledby="upgrade-h">
+      <h2 id="upgrade-h">升级</h2>
+      <p class="section-body">开发者模式加载的扩展不会自动更新。管理面板每天最多检查一次新版本，发现更新会显示下载入口;也可以在面板顶部手动点「检查更新」。升级时下载新 zip 覆盖原文件夹，再到扩展页点「重新加载」;或解压到新文件夹后删掉旧扩展、重新加载。检查更新只读取 GitHub Release 信息，不会自动下载或替换文件。</p>
+    </section>
+
+    <section aria-labelledby="notes-h">
+      <h2 id="notes-h">注意事项</h2>
+      <ul class="note-list">
+        <li>插件本身免费、开源，源码见上方链接。</li>
+        <li>简历数据和 AI 配置存在浏览器本地。点「一键 AI 填写」或解析简历时，相关文字会发送到你自己配置的 AI 接口。</li>
+        <li>不同网站表单结构差异较大，日期、学历、级联下拉这类控件容易匹配不上，填完提交前建议自己核对一遍。</li>
+      </ul>
+    </section>
+
+    <p class="tool-links">
+      <a href={issuesUrl} target="_blank" rel="noreferrer">提交问题</a>
+      <span>QQ 群 1121142517 · 安装、AI 接口、网站兼容性问题</span>
+    </p>
   </main>
+
+  <footer class="site-footer">
+    <span>MIT · 开源</span>
+    <nav>
+      <a href={sourceUrl} target="_blank" rel="noreferrer">GitHub</a>
+      <a href={issuesUrl} target="_blank" rel="noreferrer">问题反馈</a>
+    </nav>
+  </footer>
 </BaseLayout>

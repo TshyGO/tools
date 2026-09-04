@@ -1,0 +1,28 @@
+---
+import type { Tool } from '../data/tools';
+
+interface Props {
+  tool: Tool;
+}
+
+const { tool } = Astro.props;
+---
+
+<article class="tool-row">
+  <a class="tool-row__shot" href={tool.detailPath} aria-hidden="true" tabindex="-1">
+    <img src={tool.screenshots[0].src} alt="" loading="lazy" width="640" height="440" />
+  </a>
+  <div class="tool-row__body">
+    <span class="pill"><i></i>{tool.platform} · {tool.status}</span>
+    <h2 class="tool-row__name">
+      <a href={tool.detailPath}>{tool.name}</a>
+      <small>{tool.englishName}</small>
+    </h2>
+    <p class="tool-row__desc">{tool.tagline}</p>
+    <div class="tool-row__actions">
+      <a class="button button--primary button--sm" href={tool.releaseUrl} target="_blank" rel="noreferrer">下载</a>
+      <a class="button button--sm" href={tool.detailPath}>使用说明</a>
+      <a class="button button--sm" href={tool.sourceUrl} target="_blank" rel="noreferrer">源码</a>
+    </div>
+  </div>
+</article>
