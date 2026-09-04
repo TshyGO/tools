@@ -1,0 +1,159 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { tools } from '../../../data/tools';
+
+const tool = tools.find((t) => t.slug === 'resume-pro')!;
+const sourceUrl = tool.sourceUrl;
+const issuesUrl = 'https://github.com/TshyGO/resume-form-assistant-plugin/issues';
+const qqGroup = '1121142517';
+---
+
+<BaseLayout
+  title="简历灵填助手 常见问题｜PeterKit"
+  description="简历灵填助手 Resume Pro 常见问题：AI 接口地址填写规则、报错原因对照、数据存储位置、字段未填写的处理方法。"
+>
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="brand__mark">PK</span>
+      <span>PeterKit</span>
+    </a>
+    <nav>
+      <a href={tool.detailPath}>使用说明</a>
+      <a href={sourceUrl} target="_blank" rel="noreferrer">GitHub</a>
+    </nav>
+  </header>
+
+  <main class="page page--tool">
+    <a class="crumb" href={tool.detailPath}>← {tool.name}</a>
+
+    <header class="tool-head">
+      <div class="tool-head__tags">
+        <span class="tag">{tool.name} {tool.englishName}</span>
+      </div>
+      <h1>常见问题</h1>
+      <p class="tool-head__desc">以下问题均针对{tool.name}。如果没有找到需要的答案，可以通过 QQ 群 {qqGroup} 或 <a href={issuesUrl} target="_blank" rel="noreferrer">GitHub Issue</a> 反馈。</p>
+    </header>
+
+    <section class="faq-section">
+      <article class="qa" id="api-url">
+        <span class="qa__n">01</span>
+        <h3 class="qa__q">AI 接口地址（API URL）应该填写到哪一层？<a class="anchor" href="#api-url" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>需要填写完整的 Chat Completions 端点，即以 <code>/chat/completions</code> 结尾的地址。插件会将该地址原样用于发送请求，不会自动补全后续路径，因此仅填写域名或仅填写到 <code>/v1</code> 都会导致请求失败。</p>
+          <ul class="url-check">
+            <li class="is-bad"><code>https://api.openai.com</code><span>仅填写了域名</span></li>
+            <li class="is-bad"><code>https://api.openai.com/v1</code><span>缺少 /chat/completions</span></li>
+            <li class="is-good"><code>https://api.openai.com/v1/chat/completions</code><span>正确</span></li>
+          </ul>
+          <p>使用其他服务商时规则相同：替换域名部分，保留后续路径。地址填写有误时，插件会提示「无法连接 AI 接口，请检查网络和 API URL」或「AI 接口请求失败」。</p>
+        </div>
+      </article>
+
+      <article class="qa" id="err-connect">
+        <span class="qa__n">02</span>
+        <h3 class="qa__q">提示「无法连接 AI 接口，请检查网络和 API URL」<a class="anchor" href="#err-connect" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>该提示表示请求未能发出，或发出后未收到响应。建议按以下顺序排查：</p>
+          <ol class="qa-steps">
+            <li>确认接口地址已<a href="#api-url">填写完整</a>。</li>
+            <li>检查域名拼写是否正确，地址前后是否存在多余的空格。</li>
+            <li>确认该接口在当前网络环境下可以访问。国内直接连接 <code>api.openai.com</code> 通常不可用，需要改用可正常访问的中转服务商。</li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="qa" id="err-request">
+        <span class="qa__n">03</span>
+        <h3 class="qa__q">提示「AI 接口请求失败」并附带一段英文<a class="anchor" href="#err-request" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>该提示表示请求已发出，但接口返回了错误。冒号之后的内容由接口原样返回，可据此判断原因：</p>
+          <div class="qa-table-wrap">
+            <table class="qa-table">
+              <thead>
+                <tr><th>返回内容</th><th>原因</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>401</code> / <code>invalid api key</code></td><td>API Key 填写错误或已失效</td></tr>
+                <tr><td><code>404</code> / <code>405</code></td><td>接口路径不正确，通常是端点未填写完整</td></tr>
+                <tr><td><code>429</code></td><td>请求频率超出限制，或账户余额不足</td></tr>
+                <tr><td><code>model not found</code></td><td>模型名称拼写错误，或该服务商不提供此模型</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </article>
+
+      <article class="qa" id="err-parse">
+        <span class="qa__n">04</span>
+        <h3 class="qa__q">提示「AI 返回格式异常，无法解析」<a class="anchor" href="#err-parse" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>该提示表示接口连接正常，但模型返回的内容不符合格式要求。插件要求模型仅输出一个 JSON 数组，部分参数量较小的模型难以稳定满足该要求，会附带解释文字或 markdown 代码块。</p>
+          <p>更换能力更强的模型通常可以解决，<code>gpt-4o-mini</code> 级别即可满足需求。</p>
+        </div>
+      </article>
+
+      <article class="qa" id="missing-fields">
+        <span class="qa__n">05</span>
+        <h3 class="qa__q">部分字段没有填写，或填写的内容不正确<a class="anchor" href="#missing-fields" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>这属于预期内的情况。各招聘网站的表单结构差异较大，日期选择器、级联下拉（省市区、学校院系）等控件较难自动匹配。</p>
+          <p>对于未自动填写的字段，可以先点击目标输入框，再点击侧边栏中对应的字段按钮，插件会将该字段的值写入当前光标所在的输入框；也可以手动复制粘贴。</p>
+          <p>建议在提交前完整核对一遍已填写的内容。</p>
+        </div>
+      </article>
+
+      <article class="qa" id="cost">
+        <span class="qa__n">06</span>
+        <h3 class="qa__q">插件是否收费？AI 接口是否需要付费？<a class="anchor" href="#cost" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>插件本身完全免费且开源，<a href={sourceUrl} target="_blank" rel="noreferrer">源码公开</a>，不含任何内购项目。</p>
+          <p>AI 接口由用户自行配置，相关费用由所选服务商收取，与插件无关。单次填表的消耗较小，使用低价模型时费用通常可以忽略。</p>
+        </div>
+      </article>
+
+      <article class="qa" id="privacy">
+        <span class="qa__n">07</span>
+        <h3 class="qa__q">简历数据会被上传到哪里？<a class="anchor" href="#privacy" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>简历数据、模板和 AI 配置均保存在浏览器的本地存储中。插件没有后端服务器，作者无法获取任何用户数据。</p>
+          <p>需要注意的是，使用「一键 AI 填写」或 AI 解析简历功能时，相关文本会发送至用户自行配置的 AI 接口。这部分数据的处理方式取决于所选的服务商。如对此有顾虑，可以改用本地部署的模型接口。</p>
+        </div>
+      </article>
+
+      <article class="qa" id="update">
+        <span class="qa__n">08</span>
+        <h3 class="qa__q">下载了新版本，但插件仍是旧版<a class="anchor" href="#update" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>通过开发者模式加载的扩展不会自动更新。需要完成以下步骤，新版本才会生效：</p>
+          <ol class="qa-steps">
+            <li>下载新版 zip 并解压，覆盖原有的扩展文件夹。</li>
+            <li>打开 <code>chrome://extensions</code>，在 Resume Pro 卡片上点击「重新加载」。</li>
+            <li>刷新已经打开的网申页面。</li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="qa" id="browser">
+        <span class="qa__n">09</span>
+        <h3 class="qa__q">支持哪些浏览器？<a class="anchor" href="#browser" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>支持 Chrome 和 Edge。其他基于 Chromium 内核的浏览器（如各类双核浏览器的极速模式）通常也可以安装，但未逐一测试。Firefox 和 Safari 不支持。</p>
+        </div>
+      </article>
+    </section>
+
+    <p class="tool-links">
+      <a href={tool.detailPath}>使用说明</a>
+      <a href="/faq/">其他工具的常见问题</a>
+      <a href={issuesUrl} target="_blank" rel="noreferrer">提交问题</a>
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <span>MIT · 开源</span>
+    <nav>
+      <a href="/">工具目录</a>
+      <a href={sourceUrl} target="_blank" rel="noreferrer">GitHub</a>
+    </nav>
+  </footer>
+</BaseLayout>

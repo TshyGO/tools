@@ -2,6 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ToolRow from '../components/ToolRow.astro';
 import { tools } from '../data/tools';
+
+const qqGroup = '1121142517';
 ---
 
 <BaseLayout
@@ -14,27 +16,84 @@ import { tools } from '../data/tools';
       <span>PeterKit</span>
     </a>
     <nav>
+      <a href="/faq/">常见问题</a>
       <a href="https://github.com/TshyGO/tools" target="_blank" rel="noreferrer">GitHub</a>
-      <a href="https://github.com/TshyGO/tools/issues" target="_blank" rel="noreferrer">反馈</a>
     </nav>
   </header>
 
   <main>
-    <div class="intro">
+    <section class="intro">
       <h1>工具目录</h1>
       <p>免费、开源。每个工具都有独立的下载和使用说明。</p>
-    </div>
+    </section>
 
     <div class="directory">
       {tools.map((tool) => <ToolRow tool={tool} />)}
     </div>
+
+    <section class="contact" aria-labelledby="contact-h">
+      <div>
+        <h2 id="contact-h">遇到问题？</h2>
+        <p>安装、AI 接口配置、网站兼容性，群里都可以问。也可以先看 <a href="/faq/">常见问题</a>。</p>
+      </div>
+      <div class="contact__group">
+        <span class="contact__no">QQ 群 <b id="qq-number">{qqGroup}</b></span>
+        <button class="button button--sm" type="button" id="copy-qq" data-qq={qqGroup}>
+          <span class="button__label">复制群号</span>
+        </button>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
     <span>MIT · 开源</span>
     <nav>
+      <a href="/faq/">常见问题</a>
       <a href="https://github.com/TshyGO/tools" target="_blank" rel="noreferrer">GitHub</a>
-      <a href="https://github.com/TshyGO/tools/issues" target="_blank" rel="noreferrer">问题反馈</a>
+      <a href="https://github.com/TshyGO/tools/issues" target="_blank" rel="noreferrer">反馈</a>
     </nav>
   </footer>
+
+  <script>
+    const btn = document.getElementById('copy-qq');
+    const label = btn?.querySelector('.button__label');
+
+    if (btn instanceof HTMLButtonElement && label) {
+      let resetTimer: ReturnType<typeof setTimeout> | undefined;
+
+      const swapTo = (text: string) => {
+        label.classList.add('is-swapping');
+        setTimeout(() => {
+          label.textContent = text;
+          label.classList.remove('is-swapping');
+        }, 160);
+      };
+
+      // 复制不可用时（非安全上下文、旧浏览器、权限被拒）退回到帮用户选中号码
+      const selectNumber = () => {
+        const el = document.getElementById('qq-number');
+        if (!el) return;
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        const sel = window.getSelection();
+        sel?.removeAllRanges();
+        sel?.addRange(range);
+      };
+
+      btn.addEventListener('click', async () => {
+        const value = btn.dataset.qq ?? '';
+        let ok = false;
+        try {
+          await navigator.clipboard.writeText(value);
+          ok = true;
+        } catch {
+          selectNumber();
+        }
+
+        swapTo(ok ? '已复制' : '已选中，按 Ctrl+C');
+        clearTimeout(resetTimer);
+        resetTimer = setTimeout(() => swapTo('复制群号'), 2400);
+      });
+    }
+  </script>
 </BaseLayout>

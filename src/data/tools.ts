@@ -7,6 +7,7 @@ export type Tool = {
   platform: string;
   status: string;
   detailPath: string;
+  faqPath: string;
   releaseUrl: string;
   sourceUrl: string;
   screenshots: { src: string; caption: string }[];
@@ -21,6 +22,7 @@ export const tools: Tool[] = [
     platform: 'Chrome / Edge 插件',
     status: '现已开放',
     detailPath: '/tools/resume-pro/',
+    faqPath: '/tools/resume-pro/faq/',
     releaseUrl: 'https://github.com/TshyGO/resume-form-assistant-plugin/releases/latest',
     sourceUrl: 'https://github.com/TshyGO/resume-form-assistant-plugin',
     screenshots: [

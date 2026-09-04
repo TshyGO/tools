@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 const releaseUrl = 'https://github.com/TshyGO/resume-form-assistant-plugin/releases/latest';
 const sourceUrl = 'https://github.com/TshyGO/resume-form-assistant-plugin';
@@ -16,8 +16,8 @@ const issuesUrl = 'https://github.com/TshyGO/resume-form-assistant-plugin/issues
       <span>PeterKit</span>
     </a>
     <nav>
+      <a href="/tools/resume-pro/faq/">常见问题</a>
       <a href={sourceUrl} target="_blank" rel="noreferrer">GitHub</a>
-      <a href={issuesUrl} target="_blank" rel="noreferrer">反馈</a>
     </nav>
   </header>
 
@@ -33,7 +33,6 @@ const issuesUrl = 'https://github.com/TshyGO/resume-form-assistant-plugin/issues
       <p class="tool-head__desc">把简历信息存成 Excel，打开招聘网站的网申页面，点「一键 AI 填写」，插件读取表单并匹配姓名、手机号、邮箱、学校、专业等字段。免费开源，AI 功能需要自己配置接口。</p>
       <div class="tool-head__actions">
         <a class="button button--primary" href={releaseUrl} target="_blank" rel="noreferrer">下载最新版 ↗</a>
-        <a class="button" href={sourceUrl} target="_blank" rel="noreferrer">查看源码 ↗</a>
       </div>
     </header>
 
@@ -54,9 +53,9 @@ const issuesUrl = 'https://github.com/TshyGO/resume-form-assistant-plugin/issues
 
     <section aria-labelledby="config-h">
       <h2 id="config-h">配置 AI 接口</h2>
-      <p class="section-lead">点击浏览器工具栏的 Resume Pro 图标，打开管理面板的「AI 配置」标签。需要一个 OpenAI 兼容接口:</p>
+      <p class="section-lead">点击浏览器工具栏的 Resume Pro 图标，打开管理面板的「AI 配置」标签。需要一个 OpenAI 兼容接口：</p>
       <ol class="steps">
-        <li><p><b>API URL。</b>形如 <code>https://api.openai.com/v1/chat/completions</code>，填你自己接口服务商给的地址。</p></li>
+        <li><p><b>API URL。</b>要填<b>完整端点</b>，一直写到 <code>/chat/completions</code>，例如 <code>https://api.openai.com/v1/chat/completions</code>。只写到域名或 <code>/v1</code> 会连不上，详见<a href="/tools/resume-pro/faq/#api-url">常见问题</a>。</p></li>
         <li><p><b>模型名称。</b>例如 <code>gpt-4o-mini</code>，按服务商支持的模型填写。</p></li>
         <li><p><b>API Key。</b>接口的访问密钥，保存后只存在本地浏览器，不会上传到插件作者的服务器。</p></li>
       </ol>
@@ -94,6 +93,7 @@ const issuesUrl = 'https://github.com/TshyGO/resume-form-assistant-plugin/issues
     </section>
 
     <p class="tool-links">
+      <a href="/tools/resume-pro/faq/">常见问题</a>
       <a href={issuesUrl} target="_blank" rel="noreferrer">提交问题</a>
       <span>QQ 群 1121142517 · 安装、AI 接口、网站兼容性问题</span>
     </p>
@@ -102,6 +102,7 @@ const issuesUrl = 'https://github.com/TshyGO/resume-form-assistant-plugin/issues
   <footer class="site-footer">
     <span>MIT · 开源</span>
     <nav>
+      <a href="/tools/resume-pro/faq/">常见问题</a>
       <a href={sourceUrl} target="_blank" rel="noreferrer">GitHub</a>
       <a href={issuesUrl} target="_blank" rel="noreferrer">问题反馈</a>
     </nav>

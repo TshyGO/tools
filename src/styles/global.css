@@ -11,11 +11,19 @@
   --radius: 12px;
   --radius-pill: 999px;
   --sans: Geist, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+  --mono: ui-monospace, "SFMono-Regular", "Cascadia Code", Consolas, monospace;
+  /* 内置缓动太软，用更强的自定义曲线 */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --shadow-rest: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.02);
+  --shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.04);
   color-scheme: light;
 }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
 body {
   margin: 0;
   min-height: 100svh;
@@ -76,11 +84,9 @@ a { color: inherit; }
   font-size: 13.5px;
   color: var(--ink-2);
 }
-.site-header nav a { text-decoration: none; }
-.site-header nav a:hover { color: var(--ink); }
+.site-header nav a { text-decoration: none; transition: color 150ms var(--ease-out); }
 .site-footer nav { margin-left: auto; display: flex; gap: 20px; }
-.site-footer a { text-decoration: none; }
-.site-footer a:hover { color: var(--ink); }
+.site-footer a { text-decoration: none; transition: color 150ms var(--ease-out); }
 
 /* ── buttons ──────────────────────────────────── */
 .button {
@@ -97,16 +103,25 @@ a { color: inherit; }
   font-size: 13.5px;
   font-weight: 600;
   text-decoration: none;
-  transition: opacity 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  transition:
+    transform 160ms var(--ease-out),
+    background 150ms var(--ease-out),
+    border-color 150ms var(--ease-out),
+    box-shadow 150ms var(--ease-out);
 }
-.button:hover { border-color: rgba(0, 0, 0, 0.24); background: var(--sunken); }
+.button:active { transform: scale(0.97); }
 .button--primary {
   background: var(--ink);
   border-color: var(--ink);
   color: #fff;
+  box-shadow: var(--shadow-rest);
 }
-.button--primary:hover { opacity: 0.85; background: var(--ink); }
 .button--sm { height: 34px; padding: 0 15px; font-size: 12.5px; }
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover { border-color: rgba(0, 0, 0, 0.24); background: var(--sunken); }
+  .button--primary:hover { background: #262629; border-color: #262629; box-shadow: var(--shadow-hover); }
+}
 
 /* ── pill / status ────────────────────────────── */
 .pill {
@@ -134,7 +149,7 @@ a { color: inherit; }
 
 .directory {
   width: min(1040px, calc(100% - 40px));
-  margin: 0 auto 80px;
+  margin: 0 auto 52px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -146,6 +161,11 @@ a { color: inherit; }
   border-radius: var(--radius);
   background: var(--surface);
   overflow: hidden;
+  box-shadow: var(--shadow-rest);
+  transition: border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .tool-row:hover { border-color: rgba(0, 0, 0, 0.18); box-shadow: var(--shadow-hover); }
 }
 .tool-row__shot {
   display: block;
@@ -164,8 +184,7 @@ a { color: inherit; }
   font-weight: 600;
   letter-spacing: -0.02em;
 }
-.tool-row__name a { text-decoration: none; }
-.tool-row__name a:hover { color: var(--ink-2); }
+.tool-row__name a { text-decoration: none; transition: color 150ms var(--ease-out); }
 .tool-row__name small { font-weight: 400; font-size: 13px; color: var(--ink-3); }
 .tool-row__desc { margin: 0; color: var(--ink-2); font-size: 14.5px; max-width: 50ch; }
 .tool-row__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 18px; }
@@ -176,7 +195,17 @@ a { color: inherit; }
   margin: 0 auto;
   padding: 40px 0 64px;
 }
-.page--tool { width: min(760px, calc(100% - 40px)); }
+/* 外层容器与 header 同宽同起点，保证左边缘对齐 */
+.page--tool { width: min(1040px, calc(100% - 40px)); }
+/* 正文限制在可读行长内（约 46 汉字/行） */
+.page--tool > * { max-width: 660px; }
+.page--tool > section { max-width: none; }
+.page--tool > section > * { max-width: 660px; }
+/* 图片没有行长问题，撑满容器 */
+.page--tool .tool-shot { max-width: none; }
+/* 结构性的分隔线与图片同宽，内容仍守住行长 */
+.page--tool > .tool-head { max-width: none; }
+.page--tool > .tool-head > * { max-width: 660px; }
 .crumb {
   display: block;
   margin: 0 0 20px;
@@ -184,7 +213,7 @@ a { color: inherit; }
   color: var(--ink-3);
   text-decoration: none;
 }
-.crumb:hover { color: var(--ink); }
+
 
 .tool-head { padding-bottom: 24px; border-bottom: 1px solid var(--line-soft); margin-bottom: 32px; }
 .tool-head__tags { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
@@ -255,13 +284,12 @@ a { color: inherit; }
 
 .note-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .note-list li {
-  display: grid;
-  grid-template-columns: 16px 1fr;
-  gap: 10px;
+  position: relative;
+  padding-left: 16px;
   font-size: 13.5px;
   color: var(--ink-2);
 }
-.note-list li::before { content: "·"; color: var(--ink); font-weight: 700; }
+.note-list li::before { content: "·"; position: absolute; left: 2px; color: var(--ink); font-weight: 700; }
 
 .page--tool code {
   padding: 1px 6px;
@@ -271,8 +299,7 @@ a { color: inherit; }
   font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
   font-size: 0.86em;
 }
-.page--tool a:not(.button):not(.crumb) { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
-.page--tool a:not(.button):not(.crumb):hover { text-decoration-color: var(--ink); }
+.page--tool a:not(.button):not(.crumb):not(.faq-index__link) { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; transition: text-decoration-color 150ms var(--ease-out); }
 
 .tool-links {
   display: flex;
@@ -284,11 +311,219 @@ a { color: inherit; }
   font-size: 13px;
   color: var(--ink-3);
 }
-.tool-links a { text-decoration: none; }
-.tool-links a:hover { color: var(--ink); }
+.tool-links a { text-decoration: none; transition: color 150ms var(--ease-out); }
+
+@media (hover: hover) and (pointer: fine) {
+  .site-header nav a:hover,
+  .site-footer a:hover,
+  .crumb:hover,
+  .tool-links a:hover { color: var(--ink); }
+  .tool-row__name a:hover { color: var(--ink-2); }
+  .page--tool a:not(.button):not(.crumb):not(.faq-index__link):hover { text-decoration-color: var(--ink); }
+}
 
 @media (max-width: 720px) {
   .tool-row { grid-template-columns: 1fr; }
   .tool-row__shot { aspect-ratio: 16 / 9; border-right: 0; border-bottom: 1px solid var(--line); }
   .tool-row__body { padding: 20px; }
+}
+
+/* ── 首页联系方式 ─────────────────────────────── */
+.contact {
+  width: min(1040px, calc(100% - 40px));
+  margin: 0 auto 80px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px 32px;
+  padding: 22px 26px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--sunken);
+}
+.contact h2 { margin: 0 0 4px; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+.contact p { margin: 0; font-size: 13.5px; color: var(--ink-2); }
+.contact__group { display: flex; align-items: center; gap: 12px; }
+.contact__no {
+  font-size: 13.5px;
+  color: var(--ink-2);
+  padding: 7px 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.contact__no b {
+  font-family: var(--mono);
+  font-size: 14.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+.button__label {
+  display: inline-block;
+  transition: filter 160ms var(--ease-out), opacity 160ms var(--ease-out);
+}
+.button__label.is-swapping { filter: blur(3px); opacity: 0.4; }
+
+/* ── 问答条目 ─────────────────────────────────── */
+.faq-section { margin-top: 40px; }
+.faq-section > h2 {
+  margin: 0 0 4px;
+  padding-bottom: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.qa {
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  padding: 26px 0;
+  border-top: 1px solid var(--line-soft);
+  scroll-margin-top: 24px;
+}
+.qa__n {
+  grid-column: 1;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-3);
+  padding-top: 3px;
+  font-variant-numeric: tabular-nums;
+}
+.qa__q {
+  grid-column: 2;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 12px;
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.5;
+}
+.qa__a { grid-column: 2; }
+.qa__a > * { margin: 0 0 12px; }
+.qa__a > *:last-child { margin-bottom: 0; }
+.qa__a p { font-size: 14px; color: var(--ink-2); line-height: 1.75; }
+
+.qa .anchor {
+  color: var(--ink-3);
+  text-decoration: none;
+  font-weight: 400;
+  opacity: 0;
+  transition: opacity 150ms var(--ease-out), color 150ms var(--ease-out);
+}
+.qa .anchor:focus-visible { opacity: 1; }
+.qa:target { background: rgba(23, 130, 90, 0.05); box-shadow: -14px 0 0 rgba(23, 130, 90, 0.05), 14px 0 0 rgba(23, 130, 90, 0.05); }
+
+/* 答案里的有序步骤 */
+.qa-steps { counter-reset: qs; margin: 0; padding: 0; list-style: none; }
+.qa-steps li {
+  counter-increment: qs;
+  position: relative;
+  padding: 7px 0 7px 28px;
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.7;
+}
+.qa-steps li::before {
+  content: counter(qs) ".";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+/* 错误码对照表 */
+.qa-table-wrap { overflow-x: auto; }
+.qa-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+.qa-table th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--ink-3);
+  padding: 0 14px 8px 0;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+.qa-table td {
+  padding: 10px 14px 10px 0;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--ink-2);
+  vertical-align: top;
+}
+.qa-table tr:last-child td { border-bottom: 0; }
+.qa-table td:first-child { white-space: nowrap; }
+
+.url-check { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.url-check li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 12px;
+  padding: 10px 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  font-size: 13px;
+}
+.url-check code { font-family: var(--mono); font-size: 12.5px; word-break: break-all; }
+.url-check li::before { font-weight: 700; flex: none; }
+.url-check .is-bad::before { content: "✕"; color: #c0392b; }
+.url-check .is-good::before { content: "✓"; color: var(--ok); }
+.url-check .is-good { border-color: rgba(23, 130, 90, 0.4); background: rgba(23, 130, 90, 0.04); }
+.url-check span { color: var(--ink-3); margin-left: auto; }
+
+@media (hover: hover) and (pointer: fine) {
+  .qa__q:hover .anchor { opacity: 1; }
+  .qa .anchor:hover { color: var(--ink); }
+}
+
+@media (max-width: 620px) {
+  .contact { flex-direction: column; align-items: flex-start; }
+  .url-check span { margin-left: 0; width: 100%; }
+}
+
+/* 减弱动效：保留颜色/透明度，去掉位移与缩放 */
+@media (prefers-reduced-motion: reduce) {
+  .button:active { transform: none; }
+  .button,
+  .tool-row,
+  .button__label { transition-duration: 1ms; }
+}
+
+/* ── FAQ 索引（按工具） ───────────────────────── */
+.faq-index { margin: 0 0 8px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.faq-index a {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 16px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-rest);
+  text-decoration: none;
+  transition: border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+}
+.faq-index__name { grid-column: 1; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+.faq-index__name small { font-weight: 400; font-size: 12.5px; color: var(--ink-3); margin-left: 6px; }
+.faq-index__desc { grid-column: 1; font-size: 13.5px; color: var(--ink-2); }
+.faq-index__go { grid-column: 2; grid-row: 1 / 3; align-self: center; color: var(--ink-3); font-size: 15px; transition: transform 200ms var(--ease-out), color 200ms var(--ease-out); }
+
+@media (hover: hover) and (pointer: fine) {
+  .faq-index a:hover { border-color: rgba(0, 0, 0, 0.18); box-shadow: var(--shadow-hover); }
+  .faq-index a:hover .faq-index__go { color: var(--ink); transform: translateX(3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-index a, .faq-index__go { transition-duration: 1ms; }
+  .faq-index a:hover .faq-index__go { transform: none; }
 }
