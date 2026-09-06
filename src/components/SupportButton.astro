@@ -1,0 +1,19 @@
+---
+interface Props { small?: boolean; }
+const { small = false } = Astro.props;
+---
+
+<a class:list={['button', 'support-button', { 'button--sm': small }]} href="/support/">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z" />
+  </svg>
+  支持开发
+</a>
+
+<style>
+  a.support-button { color: #9a3412; background: #fff7ed; border-color: #fdba74; white-space: nowrap; }
+  .support-button svg { flex: none; }
+  @media (hover: hover) and (pointer: fine) {
+    a.support-button:hover { color: #7c2d12; background: #ffedd5; border-color: #fb923c; }
+  }
+</style>

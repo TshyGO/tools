@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const paymentMethods = [
+  { name: '支付宝', image: '/support/alipay.jpg', width: 1170, height: 1755, x: 221, y: 648, size: 728 },
+  { name: '微信支付', image: '/support/wechat.jpg', width: 1263, height: 1719, x: 354, y: 438, size: 554 },
+];
+---
+
+<BaseLayout
+  title="支持开发｜PeterKit"
+  description="如果 PeterKit 的工具帮到了你，欢迎支持开发中的 AI token 费用和日常维护。完全自愿，不影响工具使用。"
+>
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="brand__mark">PK</span>
+      <span>PeterKit</span>
+    </a>
+    <nav aria-label="站点导航">
+      <a href="/">工具目录</a>
+      <a href="/faq/">常见问题</a>
+    </nav>
+  </header>
+
+  <main class="page page--tool support-page">
+    <a class="crumb" href="/">← 工具目录</a>
+
+    <header class="tool-head">
+      <p class="support-eyebrow">一点支持，慢慢做好。</p>
+      <h1>请开发者喝杯咖啡</h1>
+      <p class="tool-head__desc">如果这些工具帮你省下了一点时间，欢迎支持它们继续更新。<br />金额随意，心意就好。谢谢你愿意来这里看看。</p>
+    </header>
+
+    <section class="support-purpose" aria-labelledby="purpose-h">
+      <h2 id="purpose-h">支持会用在哪里？</h2>
+      <p>开发和测试会消耗 AI token，也需要时间修复问题、适配网站、整理使用说明。你的支持会用于这些开发费用和日常维护。</p>
+      <p class="support-promise">完全自愿，不影响任何工具的下载和使用。这不是订阅，也不会解锁额外功能或提供 AI 接口额度。</p>
+    </section>
+
+    <section class="support-payment" aria-labelledby="payment-h">
+      <h2 id="payment-h">随心支持</h2>
+      <p>用支付宝或微信扫描对应收款码，金额由你决定。付款前请核对收款人。</p>
+      <p class="support-payment__note">手机浏览时可先保存收款码，再打开对应 App 的「扫一扫」，从相册选择图片。若浏览器无法保存，可打开原图后长按保存。</p>
+      <div class="payment-methods">
+        {paymentMethods.map((method) => (
+          <figure class="payment-method">
+            <figcaption>{method.name}</figcaption>
+            <a class="payment-method__image" href={method.image} target="_blank" rel="noreferrer" aria-label={`查看${method.name}收款码原图（新窗口）`}>
+              <span class="payment-method__viewport">
+                <img src={method.image} alt={`${method.name}收款码，付款前请核对收款人`} width={method.width} height={method.height}
+                  style={`width: ${method.width / method.size * 100}%; left: ${-method.x / method.size * 100}%; top: ${-method.y / method.size * 100}%;`} />
+              </span>
+            </a>
+            <a class="button button--sm" href={method.image} download={`PeterKit-${method.name}收款码.jpg`}>保存{method.name}收款码 <span aria-hidden="true">↓</span></a>
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <section aria-labelledby="other-h">
+      <h2 id="other-h">不打赏，也是一种支持</h2>
+      <p class="section-body">把工具分享给需要的朋友、认真反馈一个问题，或者在 GitHub 上点一颗 Star，都很有帮助。</p>
+      <div class="support-actions">
+        <a class="button" href="https://github.com/TshyGO/tools" target="_blank" rel="noreferrer">去 GitHub 看看 <span aria-hidden="true">↗</span></a>
+        <a class="support-feedback" href="https://github.com/TshyGO/tools/issues" target="_blank" rel="noreferrer">反馈问题</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>MIT · 开源</span>
+    <nav aria-label="页脚导航">
+      <a href="/support/" aria-current="page">支持开发</a>
+      <a href="/">工具目录</a>
+      <a href="https://github.com/TshyGO/tools" target="_blank" rel="noreferrer">GitHub</a>
+    </nav>
+  </footer>
+</BaseLayout>
+
+<style>
+  .support-page { flex: 1; }
+  .support-eyebrow { margin: 8px 0 16px; color: var(--ink-2); font-size: 13px; }
+  .support-page .tool-head { padding-bottom: 32px; }
+  .support-page .tool-head h1 { font-size: clamp(26px, 4vw, 36px); margin-bottom: 14px; }
+  .support-purpose p { margin: 0; color: var(--ink-2); font-size: 14px; line-height: 1.85; }
+  .support-purpose .support-promise { margin-top: 14px; }
+  .support-page .support-payment {
+    padding: 28px 0;
+    border-block: 1px solid var(--line);
+  }
+  .support-payment h2 { margin-bottom: 8px; }
+  .support-payment p { margin: 0; font-size: 14px; color: var(--ink-2); }
+  .support-payment .support-payment__note { margin-top: 6px; font-size: 13px; }
+  .support-page .support-payment > .payment-methods { max-width: 520px; }
+  .payment-methods { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 40px; margin-top: 28px; }
+  .payment-method { margin: 0; min-width: 0; text-align: center; }
+  .payment-method figcaption { margin-bottom: 12px; font-size: 15px; font-weight: 600; }
+  .payment-method__image { display: block; padding: 20px; background: #fff; border: 1px solid var(--line); border-radius: 12px; margin-bottom: 16px; }
+  /* 展示原图中的完整码区；外层额外白边保留扫描所需的静区。下载仍使用完整原图。 */
+  .payment-method__viewport { display: block; position: relative; aspect-ratio: 1; overflow: hidden; }
+  .payment-method img { display: block; position: absolute; max-width: none; height: auto; }
+  .payment-method .button { min-height: 44px; }
+  @media (max-width: 560px) {
+    .payment-methods { grid-template-columns: minmax(0, 1fr); }
+    .payment-method { width: 240px; max-width: 100%; }
+  }
+  .support-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: 20px; }
+  .support-feedback { display: inline-flex; align-items: center; min-height: 44px; font-size: 13px; }
+</style>

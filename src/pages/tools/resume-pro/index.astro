@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SupportButton from '../../../components/SupportButton.astro';
 
 const releaseUrl = 'https://github.com/TshyGO/resume-form-assistant-plugin/releases/latest';
 const sourceUrl = 'https://github.com/TshyGO/resume-form-assistant-plugin';
@@ -33,6 +34,7 @@ const issuesUrl = 'https://github.com/TshyGO/resume-form-assistant-plugin/issues
       <p class="tool-head__desc">把简历信息存成 Excel，打开招聘网站的网申页面，点「一键 AI 填写」，插件读取表单并匹配姓名、手机号、邮箱、学校、专业等字段。免费开源，AI 功能需要自己配置接口。</p>
       <div class="tool-head__actions">
         <a class="button button--primary" href={releaseUrl} target="_blank" rel="noreferrer">下载最新版 ↗</a>
+        <SupportButton />
       </div>
     </header>
 
@@ -93,6 +95,7 @@ const issuesUrl = 'https://github.com/TshyGO/resume-form-assistant-plugin/issues
     </section>
 
     <p class="tool-links">
+      <a href="/support/">觉得有用？支持开发</a>
       <a href="/tools/resume-pro/faq/">常见问题</a>
       <a href={issuesUrl} target="_blank" rel="noreferrer">提交问题</a>
       <span>QQ 群 1121142517 · 安装、AI 接口、网站兼容性问题</span>
@@ -102,6 +105,7 @@ const issuesUrl = 'https://github.com/TshyGO/resume-form-assistant-plugin/issues
   <footer class="site-footer">
     <span>MIT · 开源</span>
     <nav>
+      <a href="/support/">支持开发</a>
       <a href="/tools/resume-pro/faq/">常见问题</a>
       <a href={sourceUrl} target="_blank" rel="noreferrer">GitHub</a>
       <a href={issuesUrl} target="_blank" rel="noreferrer">问题反馈</a>

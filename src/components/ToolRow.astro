@@ -1,5 +1,6 @@
 ---
 import type { Tool } from '../data/tools';
+import SupportButton from './SupportButton.astro';
 
 interface Props {
   tool: Tool;
@@ -23,6 +24,7 @@ const { tool } = Astro.props;
       <a class="button button--primary button--sm" href={tool.releaseUrl} target="_blank" rel="noreferrer">下载</a>
       <a class="button button--sm" href={tool.detailPath}>使用说明</a>
       <a class="button button--sm" href={tool.faqPath}>常见问题</a>
+      <SupportButton small />
     </div>
   </div>
 </article>
