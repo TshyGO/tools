@@ -88,6 +88,13 @@ a { color: inherit; }
 .site-footer nav { margin-left: auto; display: flex; gap: 20px; }
 .site-footer a { text-decoration: none; transition: color 150ms var(--ease-out); }
 
+/* 支持入口加入后，窄屏页脚允许换行，不挤压原有链接。 */
+@media (max-width: 480px) {
+  .site-footer { height: auto; min-height: 60px; flex-wrap: wrap; padding-block: 16px; gap: 8px 16px; }
+  .site-footer nav { flex-wrap: wrap; gap: 4px 16px; }
+  .site-footer nav a { display: inline-flex; align-items: center; min-height: 44px; }
+}
+
 /* ── buttons ──────────────────────────────────── */
 .button {
   display: inline-flex;
