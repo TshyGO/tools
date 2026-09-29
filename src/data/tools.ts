@@ -30,7 +30,7 @@ export const tools: Tool[] = [
   {
     slug: 'wangshen-kuaitian',
     name: '网申快填',
-    tagline: '在浏览器侧边栏一键 AI 填写网申表单，并在桌面程序里管理简历和投递记录。',
+    tagline: '在浏览器侧边栏一键 AI 填写网申，在桌面管理简历和投递记录。',
     platform: '桌面程序 + Chrome / Edge 插件',
     status: '现已开放',
     version: { label: `桌面 ${desktopVersion} · 插件 0.4.1`, releasedAt: '2026-09-28' },
@@ -48,7 +48,7 @@ export const tools: Tool[] = [
       {
         src: '/tools/wangshen-kuaitian/sidepanel.webp',
         thumb: '/tools/wangshen-kuaitian/thumb.webp',
-        caption: '浏览器侧边栏：选择模板、一键 AI 填写、保存岗位和确认投递。截图中的简历为合成示例。',
+        caption: '网申页面右侧的侧边栏。截图中的简历为示例数据。',
         width: 1280,
         height: 800,
       },

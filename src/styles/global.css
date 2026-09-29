@@ -37,6 +37,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 a { color: inherit; }
+/* 均分各行宽度，避免最后一行只剩一两个字 */
+h1, h2, h3, p, li, dd, figcaption, td { text-wrap: balance; }
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 
 /* ── header / footer ─────────────────────────── */

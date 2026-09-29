@@ -37,7 +37,7 @@ const installDoc = `${links.source}/blob/main/docs/desktop-mvp/install-and-updat
         <img class="tool-icon tool-icon--lg" src={tool.icon} alt="" width="40" height="40" />
         {tool.name}
       </h1>
-      <p class="tool-head__desc">简历一键快填与投递管理。桌面程序保存简历模板、「我的信息」和 AI 设置，并管理投递记录；浏览器插件在网申页面的侧边栏里一键 AI 填写。免费开源，AI 功能需要自己配置一个 OpenAI 兼容接口。</p>
+      <p class="tool-head__desc">桌面程序保存简历、「我的信息」和 AI 设置，管理投递记录；浏览器插件在网申页面的侧边栏里一键 AI 填写。免费开源，AI 功能需自备 OpenAI 兼容接口。</p>
       <div class="tool-head__actions">
         <a class="button button--primary" href={links.primary.href} target="_blank" rel="noreferrer">{links.primary.label} ↗</a>
         <SupportButton />
@@ -54,26 +54,26 @@ const installDoc = `${links.source}/blob/main/docs/desktop-mvp/install-and-updat
     </figure>
 
     <section aria-labelledby="features-h">
-      <h2 id="features-h">能做什么</h2>
+      <h2 id="features-h">功能</h2>
       <div class="feature-grid">
         <div class="feature-card">
           <h3>浏览器侧边栏</h3>
           <ul class="note-list">
-            <li>一键 AI 填写：读取网页表单，匹配姓名、手机号、学校、专业、经历等字段</li>
-            <li>支持普通输入框、下拉框、单选框，以及部分日期选择器和级联下拉</li>
-            <li>没填上的字段点一下就填；已有内容时可以添加、替换或删除单个字段</li>
-            <li>AI 辅助新增条目（实验）：网页只有一条经历时，帮你点「新增」再填写</li>
-            <li>保存岗位、确认已投递、把这次填写留档到桌面</li>
+            <li>一键 AI 填写姓名、手机号、学校、专业、经历等字段</li>
+            <li>支持输入框、下拉框、单选框，以及部分日期选择器和级联下拉</li>
+            <li>点选字段补填，可在已有内容里添加、替换或删除单个字段</li>
+            <li>AI 辅助新增条目（实验）：确认后自动点「新增」，填写多段经历</li>
+            <li>保存岗位、确认投递、填写留档</li>
           </ul>
         </div>
         <div class="feature-card">
           <h3>桌面程序</h3>
           <ul class="note-list">
             <li>最多 25 套简历模板，按岗位切换</li>
-            <li>「我的信息」：籍贯、户口、家庭成员这类简历里没有的内容，填一次所有网站共用</li>
-            <li>PDF / Word / TXT 简历用 AI 整理成模板；也能导入导出 Excel / CSV</li>
-            <li>可以配置多个 AI 服务商，选一个作为当前使用</li>
-            <li>投递记录、阶段时间线、导入通知邮件、待办和备份恢复</li>
+            <li>「我的信息」：籍贯、户口、家庭成员等简历外的信息，填一次，所有网站通用</li>
+            <li>AI 解析 PDF / Word / TXT 简历，导入导出 Excel / CSV</li>
+            <li>配置多个 AI 服务商，随时切换</li>
+            <li>投递记录、阶段时间线、通知邮件导入、待办、备份恢复</li>
           </ul>
         </div>
       </div>
@@ -81,41 +81,41 @@ const installDoc = `${links.source}/blob/main/docs/desktop-mvp/install-and-updat
 
     <section aria-labelledby="install-h">
       <h2 id="install-h">安装</h2>
-      <p class="section-lead">不需要会代码，也不需要装 Python 或 Node.js。<b>先装桌面程序，再装插件。</b></p>
+      <p class="section-lead">先装桌面程序，再装插件。</p>
       <ol class="steps">
-        <li><p><b>安装桌面程序。</b>打开<a href={links.primary.href} target="_blank" rel="noreferrer">桌面程序下载页</a>，在页面底部的 Assets 里下载：macOS 选 <code>.dmg</code>，Windows 选 <code>-setup.exe</code>。安装包暂时没有商业签名，第一次打开会被系统拦一下，处理办法见<a href={`${tool.faqPath}#unsigned`}>常见问题</a>。关掉窗口后程序会留在后台，插件需要时也会自动把它拉起来。</p></li>
-        <li><p><b>安装浏览器插件。</b>打开桌面程序，按「设置 → 浏览器连接」里的引导安装插件。装好后把网申快填固定到工具栏。</p></li>
-        <li><p><b>重启浏览器并连接桌面。</b>装完插件<b>重启一次浏览器</b>，然后点工具栏的网申快填图标打开侧边栏：提示「还没和桌面配对」时，点「复制扩展 ID」，粘贴到桌面程序「设置 → 浏览器连接」；提示「需要先安装桌面程序」时回到第 1 步；能看到模板和字段就是已经连上了。</p></li>
-        <li><p><b>配置 AI。</b>见下方<a href="#config-h">配置 AI 接口</a>。</p></li>
-        <li><p><b>导入简历。</b>见下方<a href="#import-h">导入简历</a>，然后就可以<a href="#fill-h">开始填写</a>。</p></li>
+        <li><p><b>安装桌面程序。</b>打开<a href={links.primary.href} target="_blank" rel="noreferrer">下载页</a>，在 Assets 里下载：macOS 选 <code>.dmg</code>，Windows 选 <code>-setup.exe</code>。首次打开被系统拦截时，见<a href={`${tool.faqPath}#unsigned`}>常见问题</a>。</p></li>
+        <li><p><b>安装浏览器插件。</b>打开桌面程序，按「设置 → 浏览器连接」里的引导安装插件，并固定到工具栏。</p></li>
+        <li><p><b>连接桌面。</b>重启浏览器，点工具栏的网申快填图标打开侧边栏。提示「还没和桌面配对」时，点「复制扩展 ID」，粘贴到桌面程序「设置 → 浏览器连接」。能看到模板和字段即连接成功。</p></li>
+        <li><p><b>配置 AI。</b>见<a href="#config-h">配置 AI 接口</a>。</p></li>
+        <li><p><b>导入简历。</b>见<a href="#import-h">导入简历</a>，然后<a href="#fill-h">开始填写</a>。</p></li>
       </ol>
       <details class="fold">
-        <summary>无法通过引导安装？手动安装插件</summary>
+        <summary>手动安装插件</summary>
         <ol class="qa-steps">
-          <li>到 <a href={releasesUrl} target="_blank" rel="noreferrer">Releases</a> 找标签为 <code>vX.Y.Z</code> 的插件正式版，下载 <code>wangshen-kuaitian-vX.Y.Z-chrome.zip</code>，解压到一个固定文件夹，之后不要删除或移动。</li>
-          <li>地址栏输入 <code>chrome://extensions</code>（Edge 为 <code>edge://extensions</code>），打开右上角「开发者模式」。</li>
-          <li>点「加载已解压的扩展程序」，选中能直接看到 <code>manifest.json</code> 的那一层文件夹。手动安装和商店版是同一个扩展 ID，配对方式相同。</li>
+          <li>到 <a href={releasesUrl} target="_blank" rel="noreferrer">Releases</a> 下载插件正式版的 <code>wangshen-kuaitian-vX.Y.Z-chrome.zip</code>，解压到固定位置，之后不要移动。</li>
+          <li>打开 <code>chrome://extensions</code>（Edge 为 <code>edge://extensions</code>），开启右上角「开发者模式」。</li>
+          <li>点「加载已解压的扩展程序」，选择包含 <code>manifest.json</code> 的文件夹。</li>
         </ol>
       </details>
     </section>
 
     <section aria-labelledby="config-h">
       <h2 id="config-h">配置 AI 接口</h2>
-      <p class="section-lead">打开桌面程序「设置 → AI 设置」，添加一个服务商。只支持 OpenAI Chat Completions 兼容接口，国内大多数模型服务都提供这种接口。</p>
+      <p class="section-lead">在桌面程序「设置 → AI 设置」里添加服务商。需要 OpenAI Chat Completions 兼容接口，国内主流模型服务基本都支持。</p>
       <ol class="steps">
-        <li><p><b>接口地址。</b>填服务商文档里的 Base URL 即可，例如 <code>https://api.openai.com/v1</code>，桌面会自动补上 <code>/chat/completions</code>。填写规则见<a href={`${tool.faqPath}#api-url`}>常见问题</a>。请尽量使用 <code>https://</code> 开头的地址。</p></li>
-        <li><p><b>API Key。</b>你自己的 Key，保存在系统凭据库（macOS 钥匙串 / Windows 凭据管理器）里，不写进插件，也不进桌面备份。</p></li>
-        <li><p><b>模型。</b>点「获取模型」后从下拉里选，例如 <code>gpt-4o-mini</code>；获取不到时可以手动填写。</p></li>
+        <li><p><b>接口地址。</b>填服务商提供的 Base URL，例如 <code>https://api.openai.com/v1</code>，会自动补全 <code>/chat/completions</code>。详见<a href={`${tool.faqPath}#api-url`}>常见问题</a>。</p></li>
+        <li><p><b>API Key。</b>只保存在本机的系统凭据库（macOS 钥匙串 / Windows 凭据管理器）。</p></li>
+        <li><p><b>模型。</b>点「获取模型」从列表中选择，例如 <code>gpt-4o-mini</code>；列表为空时可手动填写。</p></li>
       </ol>
-      <p class="section-body">可以添加多个服务商，选一个作为「当前使用」。软件不赠送模型额度，接口是否收费取决于你使用的服务商。</p>
+      <p class="section-body">可添加多个服务商，选一个设为「当前使用」。模型费用由服务商收取。</p>
     </section>
 
     <section aria-labelledby="import-h">
       <h2 id="import-h">导入简历</h2>
-      <p class="section-lead">在桌面程序的「简历」页操作，有两种方式：</p>
+      <p class="section-lead">在桌面程序的「简历」页导入，两种方式任选：</p>
       <ol class="steps">
-        <li><p><b>用 PDF、Word 或 TXT 生成模板。</b>选择 AI 解析并上传文件，确认发送提示（会显示发给哪个服务商、多少字）后等待提取。PDF 和 Word 先在本机提取文字，再把文字发给 AI；扫描件、加密 PDF 提取不到文字时会明确提示。解析完请在模板里核对一遍。</p></li>
-        <li><p><b>自己做 Excel 模板。</b>第一行写三列表头「一级分类 / 字段名 / 值」，每行一个字段，保存为 <code>.xlsx</code> 或 UTF-8 编码的 <code>.csv</code> 后导入。「字段名」不能留空；把学校、专业、学历分开写更容易匹配。</p></li>
+        <li><p><b>AI 解析。</b>上传 PDF、Word 或 TXT 简历，确认发送后由 AI 提取成模板。扫描件和加密 PDF 无法解析。完成后请核对一遍。</p></li>
+        <li><p><b>导入 Excel。</b>第一行为表头「一级分类 / 字段名 / 值」，每行一个字段，「字段名」必填，保存为 <code>.xlsx</code> 或 UTF-8 编码的 <code>.csv</code>。学校、专业、学历分开写，匹配更准。</p></li>
       </ol>
       <div class="qa-table-wrap">
         <table class="qa-table">
@@ -129,51 +129,51 @@ const installDoc = `${links.source}/blob/main/docs/desktop-mvp/install-and-updat
           </tbody>
         </table>
       </div>
-      <p class="section-body">「简历」页下方还有「我的信息」：籍贯、户口、家庭成员这类网申常问、简历里通常没有的内容，填一次所有网站共用。</p>
+      <p class="section-body">「简历」页下方的「我的信息」用来填籍贯、户口、家庭成员等简历外的信息，所有网站通用。</p>
     </section>
 
     <section aria-labelledby="fill-h">
       <h2 id="fill-h">开始填写</h2>
       <ol class="steps">
-        <li><p><b>打开网申页面。</b>之前已经打开的页面刷新一次。</p></li>
-        <li><p><b>打开侧边栏。</b>点工具栏的网申快填图标，在「当前模板」选择要用的简历。</p></li>
-        <li><p><b>一键 AI 填写。</b>等待匹配完成，填好的字段会短暂高亮，侧边栏显示本次填了多少项。再次填写时如果字段已有内容，写入前会先问你是否覆盖。</p></li>
-        <li><p><b>补上没填的字段。</b>先点网页里的输入框，再点侧边栏里对应的字段。输入框已有内容时，字段右侧有「添加 / 替换 / 删除」三个按钮。</p></li>
-        <li><p><b>提交前自己核对。</b>插件不会替你提交网申。</p></li>
+        <li><p><b>打开网申页面。</b>已打开的页面刷新一次。</p></li>
+        <li><p><b>打开侧边栏。</b>点工具栏的网申快填图标，在「当前模板」选择简历。</p></li>
+        <li><p><b>一键 AI 填写。</b>填好的字段会短暂高亮。字段已有内容时，写入前会询问是否覆盖。</p></li>
+        <li><p><b>补填。</b>点网页里的输入框，再点侧边栏对应的字段。输入框已有内容时，用字段右侧的「添加 / 替换 / 删除」。</p></li>
+        <li><p><b>核对后提交。</b>提交网申由你自己完成。</p></li>
       </ol>
     </section>
 
     <section aria-labelledby="track-h">
       <h2 id="track-h">投递管理</h2>
-      <p class="section-body">侧边栏「填写」页有「保存岗位到桌面端」和「确认已投递」：保存前会让你核对公司和岗位，确认投递时要你自己从桌面的申请里选一条。每次填写结束后，还可以把这次填写留档到桌面（只记结果和计数，不记网页上填了什么）。桌面暂时离线时，操作会进入「待同步」，桌面恢复后再完成。在桌面程序里可以查看申请列表和阶段时间线，导入通知邮件、管理待办和备份。</p>
+      <p class="section-body">在侧边栏「填写」页可以保存岗位、确认已投递，每次填写后还可以留档到桌面。桌面离线时，这些操作会进入「待同步」，恢复连接后继续处理。桌面程序里可以查看申请列表和阶段时间线，导入通知邮件，管理待办和备份。</p>
     </section>
 
     <section aria-labelledby="upgrade-h">
       <h2 id="upgrade-h">升级</h2>
       <ul class="note-list">
-        <li><b>插件：</b>商店版会自动更新。手动安装的插件需要下载新 zip 覆盖原文件夹，再到扩展页点「重新加载」。</li>
-        <li><b>桌面程序：</b>下载新版安装包直接安装，不用先卸载，数据会保留。</li>
-        <li><b>从 0.4.0 及更早版本升级：</b>插件里原来的模板、「我的信息」和 AI 配置会迁到桌面程序，确认之前插件里的数据不会删除，步骤见<a href={`${tool.faqPath}#migrate`}>常见问题</a>。</li>
-        <li><b>用过「Resume Pro Desktop」测试版：</b>改名影响安装位置，不能只按普通版本升级，请先看<a href={`${installDoc}#52-从-resume-pro-desktop-测试版升级到网申快填`} target="_blank" rel="noreferrer">改名升级说明</a>。</li>
+        <li><b>插件：</b>商店版自动更新；手动安装的版本下载新 zip 覆盖原文件夹，再在扩展页点「重新加载」。</li>
+        <li><b>桌面程序：</b>直接安装新版，数据保留。</li>
+        <li><b>从 0.4.0 及更早版本升级：</b>原有模板、「我的信息」和 AI 配置会迁移到桌面程序，见<a href={`${tool.faqPath}#migrate`}>常见问题</a>。</li>
+        <li><b>Resume Pro Desktop 测试版用户：</b>请按<a href={`${installDoc}#52-从-resume-pro-desktop-测试版升级到网申快填`} target="_blank" rel="noreferrer">改名升级说明</a>操作。</li>
       </ul>
     </section>
 
     <section aria-labelledby="privacy-h">
       <h2 id="privacy-h">隐私</h2>
       <ul class="note-list">
-        <li>没有服务器，作者收不到任何数据。简历模板、「我的信息」、投递记录和 AI 设置都保存在你电脑上的桌面程序档案里。</li>
-        <li>API Key 保存在系统凭据库，不写进档案，也不进桌面备份。浏览器插件不再保存简历或 Key。</li>
-        <li>使用 AI 功能时，相关内容会由桌面程序发到<b>你自己配置的</b>服务商。PDF / Word 虽然在本机提取文字，提取出的文字仍会发给 AI——「本地提取」不等于「完全不上传」。</li>
-        <li>密码、验证码类的网页字段和资料不会发送。完整说明见<a href={links.privacy} target="_blank" rel="noreferrer">隐私政策</a>。</li>
+        <li>软件没有服务器，作者拿不到任何数据。简历、「我的信息」、投递记录和 AI 设置都保存在你的电脑上。</li>
+        <li>API Key 保存在系统凭据库。</li>
+        <li>使用 AI 功能时，相关内容会发送到你配置的服务商，包括 AI 解析简历时提取的文字。</li>
+        <li>密码、验证码类字段不会发送。详见<a href={links.privacy} target="_blank" rel="noreferrer">隐私政策</a>。</li>
       </ul>
     </section>
 
     <section aria-labelledby="notes-h">
       <h2 id="notes-h">注意事项</h2>
       <ul class="note-list">
-        <li>软件本身免费、开源，源码见 <a href={links.source} target="_blank" rel="noreferrer">GitHub</a>。</li>
-        <li>各网站表单差异较大，日期、学历、证件类型、城市、级联下拉、多段经历最容易出错，提交前请完整核对。</li>
-        <li>不要在群里或公开 Issue 里发 API Key、身份证号、手机号，截图前记得打码。</li>
+        <li>免费开源，源码见 <a href={links.source} target="_blank" rel="noreferrer">GitHub</a>。</li>
+        <li>日期、学历、证件类型、城市、级联下拉和多段经历最容易填错，提交前请核对。</li>
+        <li>在群里或 Issue 里提问时，请勿发送 API Key、身份证号、手机号，截图请打码。</li>
       </ul>
     </section>
 
