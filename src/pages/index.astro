@@ -1,14 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ToolRow from '../components/ToolRow.astro';
-import { tools } from '../data/tools';
-
-const qqGroup = '1121142517';
+import { tools, qqGroup } from '../data/tools';
 ---
 
 <BaseLayout
   title="PeterKit｜免费、开源的小工具"
-  description="免费、开源的小工具目录。当前：简历灵填助手，读取 Excel 简历，一键填写网申表单。"
+  description="免费、开源的小工具目录。当前：网申快填，一键 AI 填写网申表单并管理投递记录。"
 >
   <header class="site-header">
     <a class="brand" href="/">
@@ -24,7 +22,7 @@ const qqGroup = '1121142517';
   <main>
     <section class="intro">
       <h1>工具目录</h1>
-      <p>免费、开源。每个工具都有独立的下载和使用说明。</p>
+      <p>免费开源，每个工具都有下载和使用说明。</p>
     </section>
 
     <div class="directory">
@@ -34,7 +32,7 @@ const qqGroup = '1121142517';
     <section class="contact" aria-labelledby="contact-h">
       <div>
         <h2 id="contact-h">遇到问题？</h2>
-        <p>安装、AI 接口配置、网站兼容性，群里都可以问。也可以先看 <a href="/faq/">常见问题</a>。</p>
+        <p>安装、AI 接口配置、网站兼容性问题，都可以在群里问，也可以先看<a href="/faq/">常见问题</a>。</p>
       </div>
       <div class="contact__group">
         <span class="contact__no">QQ 群 <b id="qq-number">{qqGroup}</b></span>

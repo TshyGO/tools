@@ -18,6 +18,15 @@ npm run preview
 
 构建产物位于 `dist/`。
 
+## 更新工具说明
+
+工具的名称、版本、下载链接和截图集中在 `src/data/tools.ts`，页面都从这里读取。
+对应软件发新版后，先更新 `version`，再对照软件仓库的 README 核对详情页和常见问题是否仍然准确。
+
+网申快填的页面原地址为 `/tools/resume-pro/`，已迁到 `/tools/wangshen-kuaitian/`。
+线上由 `public/_redirects` 返回 301，`astro.config.mjs` 的 `redirects` 负责本地开发和兜底跳转页。
+常见问题的锚点（如 `#api-url`）保持不变，旧链接跳转后仍能定位。
+
 ## 支持开发页
 
 `/support/` 是自愿支持入口，位于各页面页脚和工具详情底部，不影响下载或使用。

@@ -1,0 +1,6 @@
+# 简历灵填助手 0.4.1 起更名为网申快填，旧地址永久跳转（浏览器会保留 #锚点）
+/tools/resume-pro /tools/wangshen-kuaitian/ 301
+/tools/resume-pro/ /tools/wangshen-kuaitian/ 301
+/tools/resume-pro/faq /tools/wangshen-kuaitian/faq/ 301
+/tools/resume-pro/faq/ /tools/wangshen-kuaitian/faq/ 301
+/tools/resume-pro/* /tools/wangshen-kuaitian/:splat 301

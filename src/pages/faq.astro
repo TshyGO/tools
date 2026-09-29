@@ -1,13 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { tools } from '../data/tools';
-
-const qqGroup = '1121142517';
+import { tools, qqGroup } from '../data/tools';
 ---
 
 <BaseLayout
   title="常见问题｜PeterKit"
-  description="PeterKit 各工具的常见问题入口，以及关于收费、开源和数据的通用说明。"
+  description="PeterKit 各工具的常见问题入口，以及收费、开源和数据的通用说明。"
 >
   <header class="site-header">
     <a class="brand" href="/">
@@ -25,7 +23,7 @@ const qqGroup = '1121142517';
 
     <header class="tool-head">
       <h1>常见问题</h1>
-      <p class="tool-head__desc">各工具的问题不同，具体问题请查看对应工具的常见问题页。以下列出的是适用于全部工具的通用说明。</p>
+      <p class="tool-head__desc">具体问题请看各工具的常见问题页，下面是所有工具通用的说明。</p>
     </header>
 
     <section aria-labelledby="per-tool-h">
@@ -34,7 +32,7 @@ const qqGroup = '1121142517';
         {tools.map((tool) => (
           <li>
             <a class="faq-index__link" href={tool.faqPath}>
-              <span class="faq-index__name">{tool.name} <small>{tool.englishName}</small></span>
+              <span class="faq-index__name">{tool.name}</span>
               <span class="faq-index__desc">{tool.tagline}</span>
               <span class="faq-index__go" aria-hidden="true">→</span>
             </a>
@@ -50,8 +48,8 @@ const qqGroup = '1121142517';
         <span class="qa__n">01</span>
         <h3 class="qa__q">这些工具是否收费？<a class="anchor" href="#free" aria-label="链接到此问题">#</a></h3>
         <div class="qa__a">
-          <p>全部免费，不含内购、会员或使用次数限制，源码均在 GitHub 上公开。</p>
-          <p>需要注意的是，部分工具会调用第三方 AI 接口（例如简历灵填助手）。该部分费用由用户所选的服务商收取，与工具本身无关，具体说明见对应工具的页面。</p>
+          <p>全部免费开源，没有内购、会员或次数限制。</p>
+          <p>部分工具会调用第三方 AI 接口（例如网申快填），这部分费用由你选的服务商收取。</p>
         </div>
       </article>
 
@@ -59,8 +57,8 @@ const qqGroup = '1121142517';
         <span class="qa__n">02</span>
         <h3 class="qa__q">使用这些工具时，数据会被上传吗？<a class="anchor" href="#data" aria-label="链接到此问题">#</a></h3>
         <div class="qa__a">
-          <p>这些工具均没有后端服务器，作者无法获取任何用户数据，数据默认只保存在用户自己的设备上。</p>
-          <p>唯一的例外是用户主动配置了第三方接口的情况，此时相关数据会发送至用户自行填写的接口地址。每个工具的说明和常见问题中都会写明具体发送的内容。</p>
+          <p>工具都没有服务器，数据只保存在你自己的设备上。</p>
+          <p>如果你配置了第三方接口，相关数据会发送到该接口，具体内容见各工具的说明。</p>
         </div>
       </article>
 
@@ -68,7 +66,7 @@ const qqGroup = '1121142517';
         <span class="qa__n">03</span>
         <h3 class="qa__q">发现问题或有功能建议，应该通过什么渠道反馈？<a class="anchor" href="#feedback" aria-label="链接到此问题">#</a></h3>
         <div class="qa__a">
-          <p>可以在 QQ 群 {qqGroup} 中直接反馈，响应通常最快。也可以在对应工具的 GitHub 仓库提交 Issue，仓库链接位于每个工具的详情页。</p>
+          <p>在 QQ 群 {qqGroup} 反馈最快，也可以到对应工具的 GitHub 仓库提交 Issue。</p>
         </div>
       </article>
     </section>

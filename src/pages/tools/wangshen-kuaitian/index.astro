@@ -1,0 +1,197 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SupportButton from '../../../components/SupportButton.astro';
+import { getTool, qqGroup } from '../../../data/tools';
+
+const tool = getTool('wangshen-kuaitian');
+const { links } = tool;
+const shot = tool.screenshots[0];
+const releasesUrl = `${links.source}/releases`;
+const installDoc = `${links.source}/blob/main/docs/desktop-mvp/install-and-update.md`;
+---
+
+<BaseLayout
+  title="网申快填｜PeterKit"
+  description="网申快填：桌面程序 + Chrome / Edge 插件。在浏览器侧边栏一键 AI 填写网申表单，在桌面程序里管理多套简历和投递记录。免费开源。"
+>
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="brand__mark">PK</span>
+      <span>PeterKit</span>
+    </a>
+    <nav>
+      <a href={tool.faqPath}>常见问题</a>
+      <a href={links.source} target="_blank" rel="noreferrer">GitHub</a>
+    </nav>
+  </header>
+
+  <main class="page page--tool">
+    <a class="crumb" href="/">← 工具目录</a>
+
+    <header class="tool-head">
+      <div class="tool-head__tags">
+        <span class="tag">{tool.platform}</span>
+        <span class="status">{tool.status}</span>
+      </div>
+      <h1 class="tool-head__title">
+        <img class="tool-icon tool-icon--lg" src={tool.icon} alt="" width="40" height="40" />
+        {tool.name}
+      </h1>
+      <p class="tool-head__desc">桌面程序保存简历、「我的信息」和 AI 设置，管理投递记录；浏览器插件在网申页面的侧边栏里一键 AI 填写。免费开源，AI 功能需自备 OpenAI 兼容接口。</p>
+      <div class="tool-head__actions">
+        <a class="button button--primary" href={links.primary.href} target="_blank" rel="noreferrer">{links.primary.label} ↗</a>
+        <SupportButton />
+      </div>
+      <dl class="tool-meta">
+        <div><dt>当前版本</dt><dd>{tool.version.label}（{tool.version.releasedAt}）</dd></div>
+        <div><dt>系统要求</dt><dd>{tool.requirements}</dd></div>
+      </dl>
+    </header>
+
+    <figure class="tool-shot">
+      <img src={shot.src} alt="网申页面右侧的网申快填侧边栏" width={shot.width} height={shot.height} loading="lazy" />
+      <figcaption>{shot.caption}</figcaption>
+    </figure>
+
+    <section aria-labelledby="features-h">
+      <h2 id="features-h">功能</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>浏览器侧边栏</h3>
+          <ul class="note-list">
+            <li>一键 AI 填写姓名、手机号、学校、专业、经历等字段</li>
+            <li>支持输入框、下拉框、单选框，以及部分日期选择器和级联下拉</li>
+            <li>点选字段补填，可在已有内容里添加、替换或删除单个字段</li>
+            <li>AI 辅助新增条目（实验）：确认后自动点「新增」，填写多段经历</li>
+            <li>保存岗位、确认投递、填写留档</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h3>桌面程序</h3>
+          <ul class="note-list">
+            <li>最多 25 套简历模板，按岗位切换</li>
+            <li>「我的信息」：籍贯、户口、家庭成员等简历外的信息，填一次，所有网站通用</li>
+            <li>AI 解析 PDF / Word / TXT 简历，导入导出 Excel / CSV</li>
+            <li>配置多个 AI 服务商，随时切换</li>
+            <li>投递记录、阶段时间线、通知邮件导入、待办、备份恢复</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="install-h">
+      <h2 id="install-h">安装</h2>
+      <p class="section-lead">先装桌面程序，再装插件。</p>
+      <ol class="steps">
+        <li><p><b>安装桌面程序。</b>打开<a href={links.primary.href} target="_blank" rel="noreferrer">下载页</a>，在 Assets 里下载：macOS 选 <code>.dmg</code>，Windows 选 <code>-setup.exe</code>。首次打开被系统拦截时，见<a href={`${tool.faqPath}#unsigned`}>常见问题</a>。</p></li>
+        <li><p><b>安装浏览器插件。</b>打开桌面程序，按「设置 → 浏览器连接」里的引导安装插件，并固定到工具栏。</p></li>
+        <li><p><b>连接桌面。</b>重启浏览器，点工具栏的网申快填图标打开侧边栏。提示「还没和桌面配对」时，点「复制扩展 ID」，粘贴到桌面程序「设置 → 浏览器连接」。能看到模板和字段即连接成功。</p></li>
+        <li><p><b>配置 AI。</b>见<a href="#config-h">配置 AI 接口</a>。</p></li>
+        <li><p><b>导入简历。</b>见<a href="#import-h">导入简历</a>，然后<a href="#fill-h">开始填写</a>。</p></li>
+      </ol>
+      <details class="fold">
+        <summary>手动安装插件</summary>
+        <ol class="qa-steps">
+          <li>到 <a href={releasesUrl} target="_blank" rel="noreferrer">Releases</a> 下载插件正式版的 <code>wangshen-kuaitian-vX.Y.Z-chrome.zip</code>，解压到固定位置，之后不要移动。</li>
+          <li>打开 <code>chrome://extensions</code>（Edge 为 <code>edge://extensions</code>），开启右上角「开发者模式」。</li>
+          <li>点「加载已解压的扩展程序」，选择包含 <code>manifest.json</code> 的文件夹。</li>
+        </ol>
+      </details>
+    </section>
+
+    <section aria-labelledby="config-h">
+      <h2 id="config-h">配置 AI 接口</h2>
+      <p class="section-lead">在桌面程序「设置 → AI 设置」里添加服务商。需要 OpenAI Chat Completions 兼容接口，国内主流模型服务基本都支持。</p>
+      <ol class="steps">
+        <li><p><b>接口地址。</b>填服务商提供的 Base URL，例如 <code>https://api.openai.com/v1</code>，会自动补全 <code>/chat/completions</code>。详见<a href={`${tool.faqPath}#api-url`}>常见问题</a>。</p></li>
+        <li><p><b>API Key。</b>只保存在本机的系统凭据库（macOS 钥匙串 / Windows 凭据管理器）。</p></li>
+        <li><p><b>模型。</b>点「获取模型」从列表中选择，例如 <code>gpt-4o-mini</code>；列表为空时可手动填写。</p></li>
+      </ol>
+      <p class="section-body">可添加多个服务商，选一个设为「当前使用」。模型费用由服务商收取。</p>
+    </section>
+
+    <section aria-labelledby="import-h">
+      <h2 id="import-h">导入简历</h2>
+      <p class="section-lead">在桌面程序的「简历」页导入，两种方式任选：</p>
+      <ol class="steps">
+        <li><p><b>AI 解析。</b>上传 PDF、Word 或 TXT 简历，确认发送后由 AI 提取成模板。扫描件和加密 PDF 无法解析。完成后请核对一遍。</p></li>
+        <li><p><b>导入 Excel。</b>第一行为表头「一级分类 / 字段名 / 值」，每行一个字段，「字段名」必填，保存为 <code>.xlsx</code> 或 UTF-8 编码的 <code>.csv</code>。学校、专业、学历分开写，匹配更准。</p></li>
+      </ol>
+      <div class="qa-table-wrap">
+        <table class="qa-table">
+          <thead><tr><th>一级分类</th><th>字段名</th><th>值</th></tr></thead>
+          <tbody>
+            <tr><td>基本信息</td><td>姓名</td><td>张三</td></tr>
+            <tr><td>基本信息</td><td>手机号</td><td>13800000000</td></tr>
+            <tr><td>教育背景</td><td>学校</td><td>XX大学</td></tr>
+            <tr><td>教育背景</td><td>入学时间</td><td>2023-09</td></tr>
+            <tr><td>实习经历</td><td>公司</td><td>XX公司</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="section-body">「简历」页下方的「我的信息」用来填籍贯、户口、家庭成员等简历外的信息，所有网站通用。</p>
+    </section>
+
+    <section aria-labelledby="fill-h">
+      <h2 id="fill-h">开始填写</h2>
+      <ol class="steps">
+        <li><p><b>打开网申页面。</b>已打开的页面刷新一次。</p></li>
+        <li><p><b>打开侧边栏。</b>点工具栏的网申快填图标，在「当前模板」选择简历。</p></li>
+        <li><p><b>一键 AI 填写。</b>填好的字段会短暂高亮。字段已有内容时，写入前会询问是否覆盖。</p></li>
+        <li><p><b>补填。</b>点网页里的输入框，再点侧边栏对应的字段。输入框已有内容时，用字段右侧的「添加 / 替换 / 删除」。</p></li>
+        <li><p><b>核对后提交。</b>提交网申由你自己完成。</p></li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="track-h">
+      <h2 id="track-h">投递管理</h2>
+      <p class="section-body">在侧边栏「填写」页可以保存岗位、确认已投递，每次填写后还可以留档到桌面。桌面离线时，这些操作会进入「待同步」，恢复连接后继续处理。桌面程序里可以查看申请列表和阶段时间线，导入通知邮件，管理待办和备份。</p>
+    </section>
+
+    <section aria-labelledby="upgrade-h">
+      <h2 id="upgrade-h">升级</h2>
+      <ul class="note-list">
+        <li><b>插件：</b>商店版自动更新；手动安装的版本下载新 zip 覆盖原文件夹，再在扩展页点「重新加载」。</li>
+        <li><b>桌面程序：</b>直接安装新版，数据保留。</li>
+        <li><b>从 0.4.0 及更早版本升级：</b>原有模板、「我的信息」和 AI 配置会迁移到桌面程序，见<a href={`${tool.faqPath}#migrate`}>常见问题</a>。</li>
+        <li><b>Resume Pro Desktop 测试版用户：</b>请按<a href={`${installDoc}#52-从-resume-pro-desktop-测试版升级到网申快填`} target="_blank" rel="noreferrer">改名升级说明</a>操作。</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="privacy-h">
+      <h2 id="privacy-h">隐私</h2>
+      <ul class="note-list">
+        <li>软件没有服务器，作者拿不到任何数据。简历、「我的信息」、投递记录和 AI 设置都保存在你的电脑上。</li>
+        <li>API Key 保存在系统凭据库。</li>
+        <li>使用 AI 功能时，相关内容会发送到你配置的服务商，包括 AI 解析简历时提取的文字。</li>
+        <li>密码、验证码类字段不会发送。详见<a href={links.privacy} target="_blank" rel="noreferrer">隐私政策</a>。</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="notes-h">
+      <h2 id="notes-h">注意事项</h2>
+      <ul class="note-list">
+        <li>免费开源，源码见 <a href={links.source} target="_blank" rel="noreferrer">GitHub</a>。</li>
+        <li>日期、学历、证件类型、城市、级联下拉和多段经历最容易填错，提交前请核对。</li>
+        <li>在群里或 Issue 里提问时，请勿发送 API Key、身份证号、手机号，截图请打码。</li>
+      </ul>
+    </section>
+
+    <p class="tool-links">
+      <a href="/support/">觉得有用？支持开发</a>
+      <a href={tool.faqPath}>常见问题</a>
+      <a href={links.issues} target="_blank" rel="noreferrer">提交问题</a>
+      <span>QQ 群 {qqGroup} · 安装、AI 接口、网站兼容性问题</span>
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <span>MIT · 开源</span>
+    <nav>
+      <a href="/support/">支持开发</a>
+      <a href={tool.faqPath}>常见问题</a>
+      <a href={links.source} target="_blank" rel="noreferrer">GitHub</a>
+      <a href={links.issues} target="_blank" rel="noreferrer">问题反馈</a>
+    </nav>
+  </footer>
+</BaseLayout>

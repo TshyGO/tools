@@ -1,0 +1,232 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getTool, qqGroup } from '../../../data/tools';
+
+const tool = getTool('wangshen-kuaitian');
+const { links } = tool;
+const installDoc = `${links.source}/blob/main/docs/desktop-mvp/install-and-update.md`;
+---
+
+<BaseLayout
+  title="网申快填 常见问题｜PeterKit"
+  description="网申快填常见问题：连接桌面程序、AI 接口地址、报错原因对照、Excel 导入、从旧版升级、安装包未签名、数据存储位置。"
+>
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="brand__mark">PK</span>
+      <span>PeterKit</span>
+    </a>
+    <nav>
+      <a href={tool.detailPath}>使用说明</a>
+      <a href={links.source} target="_blank" rel="noreferrer">GitHub</a>
+    </nav>
+  </header>
+
+  <main class="page page--tool">
+    <a class="crumb" href={tool.detailPath}>← {tool.name}</a>
+
+    <header class="tool-head">
+      <div class="tool-head__tags">
+        <span class="tag">{tool.name} · {tool.version.label}</span>
+      </div>
+      <h1>常见问题</h1>
+      <p class="tool-head__desc">没找到答案，可以在 QQ 群 {qqGroup} 提问，或提交 <a href={links.issues} target="_blank" rel="noreferrer">GitHub Issue</a>。</p>
+    </header>
+
+    <section class="faq-section">
+      <article class="qa" id="desktop-link">
+        <span class="qa__n">01</span>
+        <h3 class="qa__q">侧边栏提示「需要先安装桌面程序」「还没和桌面配对」或「无法连接桌面程序」<a class="anchor" href="#desktop-link" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>插件要连上桌面程序才能填写。按提示处理：</p>
+          <div class="qa-table-wrap">
+            <table class="qa-table">
+              <thead>
+                <tr><th>提示</th><th>处理</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>需要先安装桌面程序</td><td>从<a href={links.primary.href} target="_blank" rel="noreferrer">下载页</a>安装桌面程序，然后重启浏览器</td></tr>
+                <tr><td>还没和桌面配对</td><td>点「复制扩展 ID」，粘贴到桌面程序「设置 → 浏览器连接」</td></tr>
+                <tr><td>无法连接桌面程序</td><td>确认桌面程序已打开；刚装完插件的话，重启浏览器</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>仍然连不上时，打开桌面程序「设置 → 浏览器连接」查看缺少哪一步，或在扩展页重新加载插件。</p>
+        </div>
+      </article>
+
+      <article class="qa" id="api-url">
+        <span class="qa__n">02</span>
+        <h3 class="qa__q">AI 接口地址（API URL）应该填写到哪一层？<a class="anchor" href="#api-url" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>在桌面程序「设置 → AI 设置」里填服务商提供的 Base URL 即可。以 <code>/v1</code> 等版本号结尾的地址会自动补全 <code>/chat/completions</code>，完整端点则原样使用。</p>
+          <ul class="url-check">
+            <li class="is-good"><code>https://api.openai.com/v1</code><span>推荐</span></li>
+            <li class="is-good"><code>https://api.openai.com/v1/chat/completions</code><span>也可以</span></li>
+            <li class="is-bad"><code>https://example.com/api</code><span>路径不完整，请求会失败</span></li>
+          </ul>
+          <p>只填域名时按 <code>/v1/chat/completions</code> 补全；服务商路径不同的，以其文档为准。</p>
+          <p>Key 请填在「API Key」一栏，不要写进地址。建议使用 <code>https://</code> 地址。</p>
+        </div>
+      </article>
+
+      <article class="qa" id="err-connect">
+        <span class="qa__n">03</span>
+        <h3 class="qa__q">AI 一直在等待，或者提示网络错误、超时<a class="anchor" href="#err-connect" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>等待超过 90 秒时，侧边栏会显示慢响应提醒，可以点「取消 AI 等待（保留本地匹配）」。排查顺序：</p>
+          <ol class="qa-steps">
+            <li>检查<a href="#api-url">接口地址</a>是否正确，前后有无空格。</li>
+            <li>确认当前网络能访问该接口。国内通常无法直连 <code>api.openai.com</code>，请换用可访问的服务商。</li>
+            <li>展开侧边栏的「填写诊断」，查看失败类别和各阶段耗时。</li>
+          </ol>
+          <p>取消后，服务商可能仍会计费。</p>
+        </div>
+      </article>
+
+      <article class="qa" id="err-request">
+        <span class="qa__n">04</span>
+        <h3 class="qa__q">AI 请求失败，各种提示分别是什么原因？<a class="anchor" href="#err-request" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>服务商返回了错误。提示后附带的英文是服务商的原始信息，可以一起参考：</p>
+          <div class="qa-table-wrap">
+            <table class="qa-table">
+              <thead>
+                <tr><th>提示</th><th>常见原因</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>API Key 无效或无权访问该模型</td><td>Key 填错、已失效，或账户没有该模型的权限（401）</td></tr>
+                <tr><td>AI 账户余额不足</td><td>服务商账户欠费（402）</td></tr>
+                <tr><td>AI 接口或模型未找到</td><td>接口地址不对，或模型名写错、服务商没有这个模型（404）</td></tr>
+                <tr><td>AI 请求过于频繁</td><td>触发限流，或额度用完（429）</td></tr>
+                <tr><td>AI 请求格式或模型配置无效</td><td>模型参数有误，或接口不兼容 OpenAI Chat Completions（400）</td></tr>
+                <tr><td>AI 服务暂时不可用</td><td>服务商或中转故障（5xx），稍后再试</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>「填写诊断」不含 Key 和简历内容，可以直接截图反馈。</p>
+        </div>
+      </article>
+
+      <article class="qa" id="err-parse">
+        <span class="qa__n">05</span>
+        <h3 class="qa__q">提示 AI 返回格式错误<a class="anchor" href="#err-parse" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>模型返回的内容不符合要求的 JSON 格式，小模型较常出现。此时会保留本地匹配的结果，显示为部分完成。换用 <code>gpt-4o-mini</code> 或更强的模型即可。</p>
+        </div>
+      </article>
+
+      <article class="qa" id="missing-fields">
+        <span class="qa__n">06</span>
+        <h3 class="qa__q">部分字段没有填写，或填写的内容不正确<a class="anchor" href="#missing-fields" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>日期、学历、证件类型、政治面貌、城市地区、级联下拉和多段经历，各网站写法差异很大，容易漏填或填错。</p>
+          <ol class="qa-steps">
+            <li>点网页里没填上的输入框，再点侧边栏对应的字段。</li>
+            <li>输入框已有内容时，用字段右侧的按钮：「添加」插入到光标处，「替换」覆盖整个输入框，「删除」只删这一个字段。</li>
+            <li>「简历字段」页可以搜索全部字段。</li>
+          </ol>
+          <p>密码、验证码和文件上传不会自动填写。遇到完全填不了的网站，欢迎<a href={links.issues} target="_blank" rel="noreferrer">提交兼容性反馈</a>，截图请遮挡个人信息。</p>
+        </div>
+      </article>
+
+      <article class="qa" id="excel">
+        <span class="qa__n">07</span>
+        <h3 class="qa__q">Excel 模板导入失败<a class="anchor" href="#excel" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>在桌面程序「简历」页导入，请检查：</p>
+          <ol class="qa-steps">
+            <li>格式为 <code>.xlsx</code> 或 UTF-8 编码的 <code>.csv</code>，只读取第一个工作表。</li>
+            <li>第一行是表头，前三列依次为「一级分类 / 字段名 / 值」。</li>
+            <li>每一行的「字段名」都有内容。</li>
+          </ol>
+          <p>只要有一行缺少「字段名」，整个文件都不会导入。提示会列出出错的行号，补全后重新导入。如果提示「共 N 行缺少字段名」，多半是第二列整体错位了。</p>
+        </div>
+      </article>
+
+      <article class="qa" id="migrate">
+        <span class="qa__n">08</span>
+        <h3 class="qa__q">从 0.4.0 及更早版本升级，原来的模板和 AI 配置怎么办？<a class="anchor" href="#migrate" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>0.4.1 起数据保存在桌面程序，旧版插件里的数据会迁移过去：</p>
+          <ol class="qa-steps">
+            <li><b>先安装并连接桌面程序，再升级插件。</b>商店版已经自动升级的，旧数据仍保留在插件里。</li>
+            <li>连接后，桌面程序切到「简历」页，列出待导入的内容。</li>
+            <li>点「导入到桌面」。桌面已有「我的信息」时，选择保留哪一份。</li>
+            <li>导入完成后，插件删除本地的旧数据。</li>
+          </ol>
+          <p>点了「不导入」，之后可以在插件状态页（侧边栏底部「插件状态」）重新发送。超过 24 KB 或超过 25 个的模板无法迁移，可在插件状态页下载为 CSV 再导入；AI 配置迁移失败时，旧 Key 也可以在插件状态页复制。</p>
+        </div>
+      </article>
+
+      <article class="qa" id="unsigned">
+        <span class="qa__n">09</span>
+        <h3 class="qa__q">安装桌面程序时系统提示「无法验证开发者」或被拦截<a class="anchor" href="#unsigned" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>安装包暂未签名，首次打开会被系统拦截：</p>
+          <ol class="qa-steps">
+            <li><b>Windows：</b>SmartScreen 弹窗中点「更多信息 → 仍要运行」。</li>
+            <li><b>macOS：</b>右键点 DMG 选「打开」，把 App 拖进「应用程序」；首次启动再右键点 App 选「打开」。新版 macOS 需在「系统设置 → 隐私与安全性」中点「仍要打开」。</li>
+          </ol>
+          <p>请勿执行 <code>xattr -dr com.apple.quarantine</code> 或关闭系统安全设置。每个安装包都附有 <code>.sha256</code> 校验文件，核对方法见<a href={`${installDoc}#21-核对下载到的文件`} target="_blank" rel="noreferrer">安装与升级说明</a>。</p>
+        </div>
+      </article>
+
+      <article class="qa" id="cost">
+        <span class="qa__n">10</span>
+        <h3 class="qa__q">软件是否收费？AI 接口是否需要付费？<a class="anchor" href="#cost" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>软件免费开源，没有内购，<a href={links.source} target="_blank" rel="noreferrer">源码</a>在 GitHub 上。</p>
+          <p>AI 费用由你选的服务商收取，单次填表消耗很少，用低价模型基本可以忽略。不配置 AI 也能导入 Excel 模板、点选字段填写和管理投递记录。</p>
+        </div>
+      </article>
+
+      <article class="qa" id="privacy">
+        <span class="qa__n">11</span>
+        <h3 class="qa__q">简历数据会被上传到哪里？<a class="anchor" href="#privacy" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>简历、「我的信息」、投递记录和 AI 设置保存在本机，API Key 保存在系统凭据库。软件没有服务器，作者拿不到任何数据。</p>
+          <p>数据目录：Windows <code>%LOCALAPPDATA%\ResumePro</code>，macOS <code>~/Library/Application Support/ResumePro</code>。</p>
+          <p>使用 AI 功能时，相关内容会发送到你配置的服务商，包括 AI 解析简历时提取的文字。介意的话可以使用本地部署的模型。详见<a href={links.privacy} target="_blank" rel="noreferrer">隐私政策</a>。</p>
+        </div>
+      </article>
+
+      <article class="qa" id="update">
+        <span class="qa__n">12</span>
+        <h3 class="qa__q">怎么升级到新版本？<a class="anchor" href="#update" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <ol class="qa-steps">
+            <li><b>商店版插件：</b>自动更新。</li>
+            <li><b>手动安装的插件：</b>下载新 zip 覆盖原文件夹，在 <code>chrome://extensions</code> 点「重新加载」，再刷新网申页面。</li>
+            <li><b>桌面程序：</b>直接安装新版，数据保留。</li>
+          </ol>
+          <p>Resume Pro Desktop 测试版用户请按<a href={`${installDoc}#52-从-resume-pro-desktop-测试版升级到网申快填`} target="_blank" rel="noreferrer">改名升级说明</a>操作。</p>
+        </div>
+      </article>
+
+      <article class="qa" id="browser">
+        <span class="qa__n">13</span>
+        <h3 class="qa__q">支持哪些系统和浏览器？<a class="anchor" href="#browser" aria-label="链接到此问题">#</a></h3>
+        <div class="qa__a">
+          <p>桌面程序支持 macOS（Apple 芯片）和 Windows（x64），暂无 Intel Mac 版本。</p>
+          <p>浏览器支持 Chrome 和 Edge 116 及以上。其他 Chromium 内核浏览器未经测试，Firefox 和 Safari 不支持。<code>chrome://</code> 等浏览器内部页面无法填写。</p>
+        </div>
+      </article>
+    </section>
+
+    <p class="tool-links">
+      <a href={tool.detailPath}>使用说明</a>
+      <a href="/faq/">其他工具的常见问题</a>
+      <a href={links.issues} target="_blank" rel="noreferrer">提交问题</a>
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <span>MIT · 开源</span>
+    <nav>
+      <a href="/support/">支持开发</a>
+      <a href="/">工具目录</a>
+      <a href={links.source} target="_blank" rel="noreferrer">GitHub</a>
+    </nav>
+  </footer>
+</BaseLayout>

@@ -37,6 +37,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 a { color: inherit; }
+/* 均分各行宽度，避免最后一行只剩一两个字 */
+h1, h2, h3, p, li, dd, figcaption, td { text-wrap: balance; }
+/* 标题和一句话简介只在标点、空格处换行，避免把「网申」这类词拆开 */
+h1, h2, h3, .tool-row__desc, .tool-head__desc { word-break: keep-all; overflow-wrap: anywhere; }
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 
 /* ── header / footer ─────────────────────────── */
@@ -174,18 +178,22 @@ a { color: inherit; }
 @media (hover: hover) and (pointer: fine) {
   .tool-row:hover { border-color: rgba(0, 0, 0, 0.18); box-shadow: var(--shadow-hover); }
 }
+/* 图片绝对定位铺满整格，卡片再高也不会露出空白 */
 .tool-row__shot {
+  position: relative;
   display: block;
-  aspect-ratio: 16 / 11;
+  min-height: 240px;
   border-right: 1px solid var(--line);
-  background: var(--sunken);
+  background: #e7efeb;
+  overflow: hidden;
 }
-.tool-row__shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.tool-row__shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
 .tool-row__body { display: flex; flex-direction: column; align-items: flex-start; padding: 24px 26px; min-width: 0; }
 .tool-row__name {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
   margin: 14px 0 8px;
   font-size: 21px;
   font-weight: 600;
@@ -194,6 +202,8 @@ a { color: inherit; }
 .tool-row__name a { text-decoration: none; transition: color 150ms var(--ease-out); }
 .tool-row__name small { font-weight: 400; font-size: 13px; color: var(--ink-3); }
 .tool-row__desc { margin: 0; color: var(--ink-2); font-size: 14.5px; max-width: 50ch; }
+.tool-row__meta { margin: 8px 0 0; font-size: 12.5px; color: var(--ink-3); }
+.tool-icon { flex: none; border-radius: 22%; }
 .tool-row__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 18px; }
 
 /* ── page shell (detail page) ─────────────────── */
@@ -238,7 +248,13 @@ a { color: inherit; }
 }
 .status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ok); }
 .tool-head h1 { margin: 0 0 8px; font-size: 30px; font-weight: 600; letter-spacing: -0.02em; }
+.tool-head__title { display: flex; align-items: center; gap: 12px; }
+.tool-icon--lg { width: 40px; height: 40px; }
 .tool-head__desc { margin: 0; color: var(--ink-2); font-size: 15px; max-width: 56ch; }
+.tool-meta { display: flex; flex-wrap: wrap; gap: 6px 28px; margin: 20px 0 0; font-size: 12.5px; }
+.tool-meta div { display: flex; gap: 8px; }
+.tool-meta dt { flex: none; color: var(--ink-3); white-space: nowrap; }
+.tool-meta dd { margin: 0; color: var(--ink-2); }
 .tool-head__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
 
 .tool-shot { margin: 0 0 40px; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--surface); }
@@ -289,6 +305,20 @@ a { color: inherit; }
 .steps li b { color: var(--ink); font-weight: 600; }
 .steps li p { margin: 0; }
 
+/* 功能分组 */
+.page--tool > section > .feature-grid { max-width: none; }
+.feature-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.feature-card { padding: 20px 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.feature-card h3 { margin: 0 0 12px; font-size: 14.5px; font-weight: 600; }
+@media (max-width: 720px) { .feature-grid { grid-template-columns: 1fr; } }
+/* 可折叠的补充说明 */
+.fold { margin-top: 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--sunken); }
+.fold summary { padding: 11px 16px; font-size: 13.5px; font-weight: 500; cursor: pointer; }
+.fold[open] summary { border-bottom: 1px solid var(--line-soft); }
+.fold .qa-steps { padding: 8px 16px 10px; }
+.page--tool section .qa-table-wrap { margin: 16px 0; }
+.note-list li b { color: var(--ink); font-weight: 600; }
+.section-lead b { color: var(--ink); font-weight: 600; }
 .note-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .note-list li {
   position: relative;
@@ -331,7 +361,7 @@ a { color: inherit; }
 
 @media (max-width: 720px) {
   .tool-row { grid-template-columns: 1fr; }
-  .tool-row__shot { aspect-ratio: 16 / 9; border-right: 0; border-bottom: 1px solid var(--line); }
+  .tool-row__shot { min-height: 0; aspect-ratio: 16 / 9; border-right: 0; border-bottom: 1px solid var(--line); }
   .tool-row__body { padding: 20px; }
 }
 
