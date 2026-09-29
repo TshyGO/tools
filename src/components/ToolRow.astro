@@ -25,9 +25,6 @@ const shot = tool.screenshots[0];
     <p class="tool-row__meta">{tool.version.label} · {tool.version.releasedAt} 更新</p>
     <div class="tool-row__actions">
       <a class="button button--primary button--sm" href={tool.links.primary.href} target="_blank" rel="noreferrer">{tool.links.primary.label}</a>
-      {tool.links.secondary && (
-        <a class="button button--sm" href={tool.links.secondary.href} target="_blank" rel="noreferrer">{tool.links.secondary.label}</a>
-      )}
       <a class="button button--sm" href={tool.detailPath}>使用说明</a>
       <a class="button button--sm" href={tool.faqPath}>常见问题</a>
       <SupportButton small />

@@ -16,7 +16,6 @@ export type Tool = {
   links: {
     /** 主下载入口 */
     primary: { label: string; href: string };
-    secondary?: { label: string; href: string };
     source: string;
     issues: string;
     privacy?: string;
@@ -25,6 +24,9 @@ export type Tool = {
 };
 
 const repo = 'https://github.com/TshyGO/resume-form-assistant-plugin';
+/** 发新桌面版后改这里；下载按钮直达这个版本的 Release。
+ * 不用 /releases/latest：插件版和桌面版在同一仓库发布，latest 可能落到没有安装包的插件 Release。 */
+const desktopVersion = '0.4.1';
 
 export const tools: Tool[] = [
   {
@@ -34,17 +36,13 @@ export const tools: Tool[] = [
     tagline: '在浏览器侧边栏一键 AI 填写网申表单，并在桌面程序里管理简历和投递记录。',
     platform: '桌面程序 + Chrome / Edge 插件',
     status: '现已开放',
-    version: { label: '桌面 0.4.1 · 插件 0.4.1', releasedAt: '2026-09-28' },
+    version: { label: `桌面 ${desktopVersion} · 插件 0.4.1`, releasedAt: '2026-09-28' },
     requirements: 'macOS（Apple 芯片）或 Windows（x64）；Chrome / Edge 116 或更新版本',
     icon: '/tools/wangshen-kuaitian/icon.png',
     detailPath: '/tools/wangshen-kuaitian/',
     faqPath: '/tools/wangshen-kuaitian/faq/',
     links: {
-      primary: { label: '下载桌面程序', href: `${repo}/releases?q=desktop-v&expanded=true` },
-      secondary: {
-        label: 'Chrome 商店安装插件',
-        href: 'https://chromewebstore.google.com/detail/diagjmploldedipjdenmecmjokckelkl',
-      },
+      primary: { label: '下载桌面程序', href: `${repo}/releases/tag/desktop-v${desktopVersion}` },
       source: repo,
       issues: `${repo}/issues`,
       privacy: `${repo}/blob/main/docs/privacy-policy.md`,

@@ -41,7 +41,6 @@ const installDoc = `${links.source}/blob/main/docs/desktop-mvp/install-and-updat
       <p class="tool-head__desc">简历一键快填与投递管理。桌面程序保存简历模板、「我的信息」和 AI 设置，并管理投递记录；浏览器插件在网申页面的侧边栏里一键 AI 填写。免费开源，AI 功能需要自己配置一个 OpenAI 兼容接口。</p>
       <div class="tool-head__actions">
         <a class="button button--primary" href={links.primary.href} target="_blank" rel="noreferrer">{links.primary.label} ↗</a>
-        {links.secondary && <a class="button" href={links.secondary.href} target="_blank" rel="noreferrer">{links.secondary.label} ↗</a>}
         <SupportButton />
       </div>
       <dl class="tool-meta">
@@ -85,14 +84,14 @@ const installDoc = `${links.source}/blob/main/docs/desktop-mvp/install-and-updat
       <h2 id="install-h">安装</h2>
       <p class="section-lead">不需要会代码，也不需要装 Python 或 Node.js。<b>先装桌面程序，再装插件。</b></p>
       <ol class="steps">
-        <li><p><b>安装桌面程序。</b>打开<a href={links.primary.href} target="_blank" rel="noreferrer">桌面程序下载页</a>，找标签为 <code>desktop-vX.Y.Z</code> 的最新正式版：macOS 下载 <code>.dmg</code>，Windows 下载 <code>-setup.exe</code>。安装包暂时没有商业签名，第一次打开会被系统拦一下，处理办法见<a href={`${tool.faqPath}#unsigned`}>常见问题</a>。关掉窗口后程序会留在后台，插件需要时也会自动把它拉起来。</p></li>
-        <li><p><b>安装浏览器插件。</b>优先从 <a href={links.secondary?.href} target="_blank" rel="noreferrer">Chrome 商店</a> 安装。Edge 用户也可以打开这个链接，按提示「允许来自其他应用商店的扩展」后安装，或者用下面的手动安装。装好后把网申快填固定到工具栏。</p></li>
+        <li><p><b>安装桌面程序。</b>打开<a href={links.primary.href} target="_blank" rel="noreferrer">桌面程序下载页</a>，在页面底部的 Assets 里下载：macOS 选 <code>.dmg</code>，Windows 选 <code>-setup.exe</code>。安装包暂时没有商业签名，第一次打开会被系统拦一下，处理办法见<a href={`${tool.faqPath}#unsigned`}>常见问题</a>。关掉窗口后程序会留在后台，插件需要时也会自动把它拉起来。</p></li>
+        <li><p><b>安装浏览器插件。</b>打开桌面程序，按「设置 → 浏览器连接」里的引导安装插件。装好后把网申快填固定到工具栏。</p></li>
         <li><p><b>重启浏览器并连接桌面。</b>装完插件<b>重启一次浏览器</b>，然后点工具栏的网申快填图标打开侧边栏：提示「还没和桌面配对」时，点「复制扩展 ID」，粘贴到桌面程序「设置 → 浏览器连接」；提示「需要先安装桌面程序」时回到第 1 步；能看到模板和字段就是已经连上了。</p></li>
         <li><p><b>配置 AI。</b>见下方<a href="#config-h">配置 AI 接口</a>。</p></li>
         <li><p><b>导入简历。</b>见下方<a href="#import-h">导入简历</a>，然后就可以<a href="#fill-h">开始填写</a>。</p></li>
       </ol>
       <details class="fold">
-        <summary>打不开 Chrome 商店？手动安装插件</summary>
+        <summary>无法通过引导安装？手动安装插件</summary>
         <ol class="qa-steps">
           <li>到 <a href={releasesUrl} target="_blank" rel="noreferrer">Releases</a> 找标签为 <code>vX.Y.Z</code> 的插件正式版，下载 <code>wangshen-kuaitian-vX.Y.Z-chrome.zip</code>，解压到一个固定文件夹，之后不要删除或移动。</li>
           <li>地址栏输入 <code>chrome://extensions</code>（Edge 为 <code>edge://extensions</code>），打开右上角「开发者模式」。</li>
