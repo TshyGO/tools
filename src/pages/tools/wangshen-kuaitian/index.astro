@@ -11,7 +11,7 @@ const installDoc = `${links.source}/blob/main/docs/desktop-mvp/install-and-updat
 ---
 
 <BaseLayout
-  title="网申快填（原简历灵填助手）｜PeterKit"
+  title="网申快填｜PeterKit"
   description="网申快填：桌面程序 + Chrome / Edge 插件。在浏览器侧边栏一键 AI 填写网申表单，在桌面程序里管理多套简历和投递记录。免费开源。"
 >
   <header class="site-header">
@@ -37,7 +37,6 @@ const installDoc = `${links.source}/blob/main/docs/desktop-mvp/install-and-updat
         <img class="tool-icon tool-icon--lg" src={tool.icon} alt="" width="40" height="40" />
         {tool.name}
       </h1>
-      <p class="tool-head__aka">原名 {tool.formerName}。0.4.1 起改为现名，并拆成桌面程序和浏览器插件两部分。</p>
       <p class="tool-head__desc">简历一键快填与投递管理。桌面程序保存简历模板、「我的信息」和 AI 设置，并管理投递记录；浏览器插件在网申页面的侧边栏里一键 AI 填写。免费开源，AI 功能需要自己配置一个 OpenAI 兼容接口。</p>
       <div class="tool-head__actions">
         <a class="button button--primary" href={links.primary.href} target="_blank" rel="noreferrer">{links.primary.label} ↗</a>

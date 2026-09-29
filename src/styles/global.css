@@ -243,7 +243,6 @@ a { color: inherit; }
 .tool-head h1 { margin: 0 0 8px; font-size: 30px; font-weight: 600; letter-spacing: -0.02em; }
 .tool-head__title { display: flex; align-items: center; gap: 12px; }
 .tool-icon--lg { width: 40px; height: 40px; }
-.tool-head__aka { margin: 0 0 10px; font-size: 13px; color: var(--ink-3); }
 .tool-head__desc { margin: 0; color: var(--ink-2); font-size: 15px; max-width: 56ch; }
 .tool-meta { display: flex; flex-wrap: wrap; gap: 6px 28px; margin: 20px 0 0; font-size: 12.5px; }
 .tool-meta div { display: flex; gap: 8px; }

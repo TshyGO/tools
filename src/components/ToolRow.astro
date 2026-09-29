@@ -19,7 +19,6 @@ const shot = tool.screenshots[0];
     <h2 class="tool-row__name">
       <img class="tool-icon" src={tool.icon} alt="" width="28" height="28" />
       <a href={tool.detailPath}>{tool.name}</a>
-      {tool.formerName && <small>原名 {tool.formerName}</small>}
     </h2>
     <p class="tool-row__desc">{tool.tagline}</p>
     <p class="tool-row__meta">{tool.version.label} · {tool.version.releasedAt} 更新</p>

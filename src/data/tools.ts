@@ -1,8 +1,6 @@
 export type Tool = {
   slug: string;
   name: string;
-  /** 改名前的名字，保留给老用户辨认和搜索 */
-  formerName?: string;
   /** 一句话，动词开头，说清楚它干什么 */
   tagline: string;
   platform: string;
@@ -32,7 +30,6 @@ export const tools: Tool[] = [
   {
     slug: 'wangshen-kuaitian',
     name: '网申快填',
-    formerName: '简历灵填助手 Resume Pro',
     tagline: '在浏览器侧边栏一键 AI 填写网申表单，并在桌面程序里管理简历和投递记录。',
     platform: '桌面程序 + Chrome / Edge 插件',
     status: '现已开放',

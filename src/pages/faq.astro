@@ -32,7 +32,7 @@ import { tools, qqGroup } from '../data/tools';
         {tools.map((tool) => (
           <li>
             <a class="faq-index__link" href={tool.faqPath}>
-              <span class="faq-index__name">{tool.name} {tool.formerName && <small>原名 {tool.formerName}</small>}</span>
+              <span class="faq-index__name">{tool.name}</span>
               <span class="faq-index__desc">{tool.tagline}</span>
               <span class="faq-index__go" aria-hidden="true">→</span>
             </a>
