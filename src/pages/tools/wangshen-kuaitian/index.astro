@@ -6,7 +6,6 @@ import { getTool, qqGroup } from '../../../data/tools';
 const tool = getTool('wangshen-kuaitian');
 const { links } = tool;
 const shot = tool.screenshots[0];
-const releasesUrl = `${links.source}/releases`;
 const installDoc = `${links.source}/blob/main/docs/desktop-mvp/install-and-update.md`;
 ---
 
@@ -43,7 +42,7 @@ const installDoc = `${links.source}/blob/main/docs/desktop-mvp/install-and-updat
         <SupportButton />
       </div>
       <dl class="tool-meta">
-        <div><dt>当前版本</dt><dd>{tool.version.label}（{tool.version.releasedAt}）</dd></div>
+        <div><dt>当前版本</dt><dd><a href={links.primary.href}>查看最新正式版与配套插件</a></dd></div>
         <div><dt>系统要求</dt><dd>{tool.requirements}</dd></div>
       </dl>
     </header>
@@ -83,7 +82,7 @@ const installDoc = `${links.source}/blob/main/docs/desktop-mvp/install-and-updat
       <h2 id="install-h">安装</h2>
       <p class="section-lead">先装桌面程序，再装插件。</p>
       <ol class="steps">
-        <li><p><b>安装桌面程序。</b>打开<a href={links.primary.href} target="_blank" rel="noreferrer">下载页</a>，在 Assets 里下载：macOS 选 <code>.dmg</code>，Windows 选 <code>-setup.exe</code>。首次打开被系统拦截时，见<a href={`${tool.faqPath}#unsigned`}>常见问题</a>。</p></li>
+        <li><p><b>安装桌面程序。</b>打开<a href={links.primary.href} target="_blank" rel="noreferrer">下载页</a>，选择自己的系统下载安装包：macOS 选 Apple 芯片版，Windows 选 x64 版。首次打开被系统拦截时，见<a href={`${tool.faqPath}#unsigned`}>常见问题</a>。</p></li>
         <li><p><b>安装浏览器插件。</b>打开桌面程序，按「设置 → 浏览器连接」里的引导安装插件，并固定到工具栏。</p></li>
         <li><p><b>连接桌面。</b>重启浏览器，点工具栏的网申快填图标打开侧边栏。提示「还没和桌面配对」时，点「复制扩展 ID」，粘贴到桌面程序「设置 → 浏览器连接」。能看到模板和字段即连接成功。</p></li>
         <li><p><b>配置 AI。</b>见<a href="#config-h">配置 AI 接口</a>。</p></li>
@@ -92,7 +91,7 @@ const installDoc = `${links.source}/blob/main/docs/desktop-mvp/install-and-updat
       <details class="fold">
         <summary>手动安装插件</summary>
         <ol class="qa-steps">
-          <li>到 <a href={releasesUrl} target="_blank" rel="noreferrer">Releases</a> 下载插件正式版的 <code>wangshen-kuaitian-vX.Y.Z-chrome.zip</code>，解压到固定位置，之后不要移动。</li>
+          <li>到<a href={links.primary.href}>下载页</a>下载与桌面版同一发布页的 <code>wangshen-kuaitian-plugin-&lt;插件版本&gt;.zip</code>，解压到固定位置，之后不要移动。</li>
           <li>打开 <code>chrome://extensions</code>（Edge 为 <code>edge://extensions</code>），开启右上角「开发者模式」。</li>
           <li>点「加载已解压的扩展程序」，选择包含 <code>manifest.json</code> 的文件夹。</li>
         </ol>
@@ -145,7 +144,7 @@ const installDoc = `${links.source}/blob/main/docs/desktop-mvp/install-and-updat
 
     <section aria-labelledby="track-h">
       <h2 id="track-h">投递管理</h2>
-      <p class="section-body">在侧边栏「填写」页可以保存岗位、确认已投递，每次填写后还可以留档到桌面。桌面离线时，这些操作会进入「待同步」，恢复连接后继续处理。桌面程序里可以查看申请列表和阶段时间线，导入通知邮件，管理待办和备份。</p>
+      <p class="section-body">在侧边栏「填写」页可以保存岗位、确认已投递，每次填写后还可以留档到桌面。曾配对但桌面暂时不可用时，可记入待同步的操作会按界面提示保留；未安装或未配对时不会排队。没有收到回包时，先到桌面或待同步列表核对结果。桌面程序里可以查看申请列表和阶段时间线，导入通知邮件，管理待办和备份。</p>
     </section>
 
     <section aria-labelledby="upgrade-h">
