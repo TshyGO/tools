@@ -20,8 +20,15 @@ npm run preview
 
 ## 更新工具说明
 
-工具的名称、版本、下载链接和截图集中在 `src/data/tools.ts`，页面都从这里读取。
-对应软件发新版后，先更新 `version`，再对照软件仓库的 README 核对详情页和常见问题是否仍然准确。
+工具的名称、固定下载入口和截图集中在 `src/data/tools.ts`，页面都从这里读取。功能或安装流程变更时，仍需对照软件仓库更新说明；单纯发布新版本不需要改网站。
+
+### 网申快填的固定下载入口
+
+`https://19991107.xyz/tools/wangshen-kuaitian/download/` 在浏览器打开时读取 GitHub 公开 Releases API，按数字版本选择非草稿、非预发布的 `desktop-vX.Y.Z`，并使用该发布实际上传的 Windows、macOS 和配套插件附件。插件版本可以与桌面版本不同；不会混用插件独立发布或 Chrome 商店版本。
+
+不需要数据库、令牌、服务器或发版后重新部署官网。不要把入口改成写死版本的 tag 链接、`releases?q=desktop-v` 或仓库通用的 `releases/latest`。现有桌面发版工作流上传附件后，访客重新打开下载页即可查询新版。
+
+API 有网络和匿名请求限额；查询超时、失败或分页不完整时，页面明确说明无法确认最新版，并保留 GitHub 发布列表入口；缺少某个安装包时只禁用该下载，不把旧版本冒充最新版。关闭 JavaScript 时也能使用备用入口。运行 `npm test` 验证版本排序、分页、附件选择与失败处理。
 
 网申快填的页面原地址为 `/tools/resume-pro/`，已迁到 `/tools/wangshen-kuaitian/`。
 线上由 `public/_redirects` 返回 301，`astro.config.mjs` 的 `redirects` 负责本地开发和兜底跳转页。

@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getTool } from '../../../data/tools';
+const tool = getTool('wangshen-kuaitian');
+---
+
+<BaseLayout title="下载网申快填｜PeterKit" description="下载最新正式版网申快填：Windows x64、macOS Apple 芯片，以及同一桌面版本随附的浏览器插件。固定入口自动查询 GitHub 正式发布。">
+  <header class="site-header">
+    <a class="brand" href="/"><span class="brand__mark">PK</span><span>PeterKit</span></a>
+    <nav><a href={tool.detailPath}>使用说明</a><a href={tool.faqPath}>常见问题</a></nav>
+  </header>
+  <main class="page page--tool">
+    <a class="crumb" href={tool.detailPath}>← 网申快填</a>
+    <header class="tool-head">
+      <h1 class="tool-head__title">下载网申快填</h1>
+      <p class="tool-head__desc">先安装并打开桌面程序，再安装浏览器插件。收藏这个页面即可，后续发版无需更换网址。</p>
+      <p id="release-status" role="status" aria-live="polite">正在查询最新桌面正式版…</p>
+      <noscript><p>自动查询需要 JavaScript。请使用下面的 GitHub 发布列表，选择不带 Pre-release 标记的最高版本 desktop-vX.Y.Z。</p></noscript>
+    </header>
+    <section id="release-downloads" hidden aria-labelledby="release-heading">
+      <h2 id="release-heading">桌面程序与配套插件</h2>
+      <div class="feature-grid">
+        <div class="feature-card"><h3>Windows</h3><p>适用于 x64 电脑</p><p id="windows-download"></p></div>
+        <div class="feature-card"><h3>macOS</h3><p>适用于 Apple 芯片</p><p id="mac-download"></p></div>
+        <div class="feature-card"><h3>配套浏览器插件</h3><p>适用于 Chrome / Edge 116 或更新版本</p><p id="plugin-download"></p></div>
+      </div>
+      <p class="section-body"><a id="release-notes">查看本次发布说明与 SHA-256 校验文件 ↗</a></p>
+    </section>
+    <section aria-labelledby="install-heading">
+      <h2 id="install-heading">安装与更新</h2>
+      <ol class="steps">
+        <li><p>安装适合自己系统的桌面程序，并至少打开一次。</p></li>
+        <li><p>插件可以从 <a href="https://chromewebstore.google.com/detail/diagjmploldedipjdenmecmjokckelkl" target="_blank" rel="noreferrer">Chrome 商店</a>安装（Edge 也可用）。商店审核与分发可能晚于 GitHub，商店版不保证是最新配套版本；想使用本页桌面版的配套插件，下载上面的 ZIP。</p></li>
+        <li><p>手动安装：把 ZIP 解压到固定位置，在 <code>chrome://extensions</code> 或 <code>edge://extensions</code> 开启「开发者模式」，点「加载已解压的扩展程序」，选择包含 <code>manifest.json</code> 的文件夹。</p></li>
+        <li><p>重启浏览器，在桌面「设置 → 浏览器连接」检查状态，按提示完成连接。已有旧数据时，先按<a href={`${tool.faqPath}#migrate`}>迁移说明</a>确认资料已迁移，不要直接卸载旧扩展或清除数据。</p></li>
+      </ol>
+      <p class="section-body">桌面和插件的版本号可能不同；上面的 ZIP 来自同一桌面发布页。后续手动更新插件时，替换原文件夹并在扩展页点「重新加载」。首次启动的系统提示见<a href={`${tool.faqPath}#unsigned`}>常见问题</a>。</p>
+    </section>
+    <section aria-labelledby="fallback-heading">
+      <h2 id="fallback-heading">其他版本与备用入口</h2>
+      <p class="section-body">无法自动查询或下载时，打开 <a href={`${tool.links.source}/releases`} target="_blank" rel="noreferrer">GitHub 发布列表 ↗</a>，选择不带 Pre-release 标记的最高版本 <code>desktop-vX.Y.Z</code>。安装包和配套插件在该版本的 Assets 中。</p>
+    </section>
+  </main>
+</BaseLayout>
+
+<script>
+  import { loadDesktopRelease } from '../../../lib/desktop-release.js';
+  const status = document.getElementById('release-status')!;
+  try {
+    const release = await loadDesktopRelease();
+    status.textContent = `最新桌面正式版：${release.version}`;
+    for (const [id, asset, label] of [
+      ['windows-download', release.windows, '下载 Windows 安装包'],
+      ['mac-download', release.mac, '下载 macOS 安装包'],
+      ['plugin-download', release.plugin, '下载配套插件 ZIP'],
+    ] as const) {
+      const container = document.getElementById(id)!;
+      if (!asset) {
+        container.textContent = '该附件暂不可用，请查看本次发布说明。';
+        continue;
+      }
+      const link = document.createElement('a');
+      link.href = asset.url;
+      link.className = 'button button--primary button--sm';
+      link.textContent = label;
+      container.append(link, document.createElement('br'), document.createTextNode(asset.name));
+    }
+    (document.getElementById('release-notes') as HTMLAnchorElement).href = release.url;
+    document.getElementById('release-downloads')!.hidden = false;
+  } catch {
+    status.textContent = '暂时无法确认最新版本（网络或 GitHub 访问受限）。请稍后刷新，或使用下方的 GitHub 发布列表。';
+  }
+</script>
+
+<style>
+  #release-downloads[hidden] { display: none; }
+  .feature-card p { overflow-wrap: anywhere; line-height: 1.8; }
+</style>

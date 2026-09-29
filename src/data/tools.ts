@@ -5,8 +5,6 @@ export type Tool = {
   tagline: string;
   platform: string;
   status: string;
-  /** 页面说明对应的版本；发新版后同步修改，并核对说明是否仍然准确 */
-  version: { label: string; releasedAt: string };
   requirements: string;
   icon: string;
   detailPath: string;
@@ -23,10 +21,6 @@ export type Tool = {
 };
 
 const repo = 'https://github.com/TshyGO/resume-form-assistant-plugin';
-/** 发新桌面版后改这里；下载按钮直达这个版本的 Release。
- * 不用 /releases/latest：插件版和桌面版在同一仓库发布，latest 可能落到没有安装包的插件 Release。 */
-const desktopVersion = '0.4.1';
-
 export const tools: Tool[] = [
   {
     slug: 'wangshen-kuaitian',
@@ -35,13 +29,12 @@ export const tools: Tool[] = [
     tagline: '在浏览器侧边栏一键\u00a0AI\u00a0填写网申，在桌面管理简历和投递记录。',
     platform: '桌面程序 + Chrome / Edge 插件',
     status: '现已开放',
-    version: { label: `桌面 ${desktopVersion} · 插件 0.4.1`, releasedAt: '2026-09-28' },
     requirements: 'macOS（Apple 芯片）或 Windows（x64）；Chrome / Edge 116 或更新版本',
     icon: '/tools/wangshen-kuaitian/icon.png',
     detailPath: '/tools/wangshen-kuaitian/',
     faqPath: '/tools/wangshen-kuaitian/faq/',
     links: {
-      primary: { label: '下载桌面程序', href: `${repo}/releases/tag/desktop-v${desktopVersion}` },
+      primary: { label: '下载桌面程序', href: '/tools/wangshen-kuaitian/download/' },
       source: repo,
       issues: `${repo}/issues`,
       privacy: `${repo}/blob/main/docs/privacy-policy.md`,
