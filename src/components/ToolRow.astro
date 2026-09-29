@@ -7,21 +7,27 @@ interface Props {
 }
 
 const { tool } = Astro.props;
+const shot = tool.screenshots[0];
 ---
 
 <article class="tool-row">
   <a class="tool-row__shot" href={tool.detailPath} aria-hidden="true" tabindex="-1">
-    <img src={tool.screenshots[0].src} alt="" loading="lazy" width="640" height="440" />
+    <img src={shot.thumb} alt="" loading="lazy" width="720" height="495" />
   </a>
   <div class="tool-row__body">
     <span class="pill"><i></i>{tool.platform} · {tool.status}</span>
     <h2 class="tool-row__name">
+      <img class="tool-icon" src={tool.icon} alt="" width="28" height="28" />
       <a href={tool.detailPath}>{tool.name}</a>
-      <small>{tool.englishName}</small>
+      {tool.formerName && <small>原名 {tool.formerName}</small>}
     </h2>
     <p class="tool-row__desc">{tool.tagline}</p>
+    <p class="tool-row__meta">{tool.version.label} · {tool.version.releasedAt} 更新</p>
     <div class="tool-row__actions">
-      <a class="button button--primary button--sm" href={tool.releaseUrl} target="_blank" rel="noreferrer">下载</a>
+      <a class="button button--primary button--sm" href={tool.links.primary.href} target="_blank" rel="noreferrer">{tool.links.primary.label}</a>
+      {tool.links.secondary && (
+        <a class="button button--sm" href={tool.links.secondary.href} target="_blank" rel="noreferrer">{tool.links.secondary.label}</a>
+      )}
       <a class="button button--sm" href={tool.detailPath}>使用说明</a>
       <a class="button button--sm" href={tool.faqPath}>常见问题</a>
       <SupportButton small />

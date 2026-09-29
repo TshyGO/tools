@@ -1,8 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { tools } from '../data/tools';
-
-const qqGroup = '1121142517';
+import { tools, qqGroup } from '../data/tools';
 ---
 
 <BaseLayout
@@ -34,7 +32,7 @@ const qqGroup = '1121142517';
         {tools.map((tool) => (
           <li>
             <a class="faq-index__link" href={tool.faqPath}>
-              <span class="faq-index__name">{tool.name} <small>{tool.englishName}</small></span>
+              <span class="faq-index__name">{tool.name} {tool.formerName && <small>原名 {tool.formerName}</small>}</span>
               <span class="faq-index__desc">{tool.tagline}</span>
               <span class="faq-index__go" aria-hidden="true">→</span>
             </a>
@@ -51,7 +49,7 @@ const qqGroup = '1121142517';
         <h3 class="qa__q">这些工具是否收费？<a class="anchor" href="#free" aria-label="链接到此问题">#</a></h3>
         <div class="qa__a">
           <p>全部免费，不含内购、会员或使用次数限制，源码均在 GitHub 上公开。</p>
-          <p>需要注意的是，部分工具会调用第三方 AI 接口（例如简历灵填助手）。该部分费用由用户所选的服务商收取，与工具本身无关，具体说明见对应工具的页面。</p>
+          <p>需要注意的是，部分工具会调用第三方 AI 接口（例如网申快填）。该部分费用由用户所选的服务商收取，与工具本身无关，具体说明见对应工具的页面。</p>
         </div>
       </article>
 
