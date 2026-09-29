@@ -39,6 +39,8 @@ body {
 a { color: inherit; }
 /* 均分各行宽度，避免最后一行只剩一两个字 */
 h1, h2, h3, p, li, dd, figcaption, td { text-wrap: balance; }
+/* 标题和一句话简介只在标点、空格处换行，避免把「网申」这类词拆开 */
+h1, h2, h3, .tool-row__desc, .tool-head__desc { word-break: keep-all; overflow-wrap: anywhere; }
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 
 /* ── header / footer ─────────────────────────── */
@@ -176,13 +178,16 @@ h1, h2, h3, p, li, dd, figcaption, td { text-wrap: balance; }
 @media (hover: hover) and (pointer: fine) {
   .tool-row:hover { border-color: rgba(0, 0, 0, 0.18); box-shadow: var(--shadow-hover); }
 }
+/* 图片绝对定位铺满整格，卡片再高也不会露出空白 */
 .tool-row__shot {
+  position: relative;
   display: block;
-  aspect-ratio: 16 / 11;
+  min-height: 240px;
   border-right: 1px solid var(--line);
-  background: var(--sunken);
+  background: #e7efeb;
+  overflow: hidden;
 }
-.tool-row__shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.tool-row__shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
 .tool-row__body { display: flex; flex-direction: column; align-items: flex-start; padding: 24px 26px; min-width: 0; }
 .tool-row__name {
   display: flex;
@@ -248,7 +253,7 @@ h1, h2, h3, p, li, dd, figcaption, td { text-wrap: balance; }
 .tool-head__desc { margin: 0; color: var(--ink-2); font-size: 15px; max-width: 56ch; }
 .tool-meta { display: flex; flex-wrap: wrap; gap: 6px 28px; margin: 20px 0 0; font-size: 12.5px; }
 .tool-meta div { display: flex; gap: 8px; }
-.tool-meta dt { color: var(--ink-3); }
+.tool-meta dt { flex: none; color: var(--ink-3); white-space: nowrap; }
 .tool-meta dd { margin: 0; color: var(--ink-2); }
 .tool-head__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
 
@@ -356,7 +361,7 @@ h1, h2, h3, p, li, dd, figcaption, td { text-wrap: balance; }
 
 @media (max-width: 720px) {
   .tool-row { grid-template-columns: 1fr; }
-  .tool-row__shot { aspect-ratio: 16 / 9; border-right: 0; border-bottom: 1px solid var(--line); }
+  .tool-row__shot { min-height: 0; aspect-ratio: 16 / 9; border-right: 0; border-bottom: 1px solid var(--line); }
   .tool-row__body { padding: 20px; }
 }
 

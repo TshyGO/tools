@@ -18,7 +18,8 @@ export type Tool = {
     issues: string;
     privacy?: string;
   };
-  screenshots: { src: string; thumb: string; caption: string; width: number; height: number }[];
+  /** thumb 用于桌面端卡片（600×480），thumbWide 用于窄屏卡片（16:9） */
+  screenshots: { src: string; thumb: string; thumbWide: string; caption: string; width: number; height: number }[];
 };
 
 const repo = 'https://github.com/TshyGO/resume-form-assistant-plugin';
@@ -30,7 +31,8 @@ export const tools: Tool[] = [
   {
     slug: 'wangshen-kuaitian',
     name: '网申快填',
-    tagline: '在浏览器侧边栏一键 AI 填写网申，在桌面管理简历和投递记录。',
+    // 「AI」两侧用不换行空格，让简介只在逗号处断行
+    tagline: '在浏览器侧边栏一键\u00a0AI\u00a0填写网申，在桌面管理简历和投递记录。',
     platform: '桌面程序 + Chrome / Edge 插件',
     status: '现已开放',
     version: { label: `桌面 ${desktopVersion} · 插件 0.4.1`, releasedAt: '2026-09-28' },
@@ -48,6 +50,7 @@ export const tools: Tool[] = [
       {
         src: '/tools/wangshen-kuaitian/sidepanel.webp',
         thumb: '/tools/wangshen-kuaitian/thumb.webp',
+        thumbWide: '/tools/wangshen-kuaitian/thumb-wide.webp',
         caption: '网申页面右侧的侧边栏。截图中的简历为示例数据。',
         width: 1280,
         height: 800,

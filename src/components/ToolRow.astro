@@ -12,7 +12,10 @@ const shot = tool.screenshots[0];
 
 <article class="tool-row">
   <a class="tool-row__shot" href={tool.detailPath} aria-hidden="true" tabindex="-1">
-    <img src={shot.thumb} alt="" loading="lazy" width="720" height="495" />
+    <picture>
+      <source media="(max-width: 720px)" srcset={shot.thumbWide} width="720" height="405" />
+      <img src={shot.thumb} alt="" loading="lazy" width="600" height="480" />
+    </picture>
   </a>
   <div class="tool-row__body">
     <span class="pill"><i></i>{tool.platform} · {tool.status}</span>
