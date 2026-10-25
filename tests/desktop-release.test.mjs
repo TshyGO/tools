@@ -59,7 +59,6 @@ test('incomplete newest release is not replaced with an older release', () => {
   newest.assets = newest.assets.filter(a => a.name.endsWith('.zip'));
   const selected = selectDesktopRelease([release('0.4.1'), newest]);
   assert.equal(selected.version, '0.5.0');
-  assert.ok(requested.every(url => url.startsWith('https://api.github.com/repositories/1217054301/releases?')));
   assert.equal(selected.windows, null);
   assert.equal(selected.mac, null);
   assert.ok(selected.plugin);
@@ -91,6 +90,7 @@ test('follows pagination and selects the highest version across all pages', asyn
   });
   assert.equal(selected.version, '0.5.0');
   assert.match(requested[1], /per_page=100&page=2$/);
+  assert.ok(requested.every(url => url.startsWith('https://api.github.com/repositories/1217054301/releases?')));
 });
 
 test('fails clearly for rate limits, network failures, malformed data and no stable releases', async () => {
