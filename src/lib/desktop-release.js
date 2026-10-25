@@ -1,5 +1,6 @@
 export const repository = 'https://github.com/TshyGO/resume-form-assistant-plugin';
-const api = 'https://api.github.com/repos/TshyGO/resume-form-assistant-plugin/releases';
+const repositories = [repository, 'https://github.com/ptjworks/resume-form-assistant-plugin'];
+const api = 'https://api.github.com/repositories/1217054301/releases';
 const versionPattern = '(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)';
 const desktopTag = new RegExp(`^desktop-v${versionPattern}$`);
 const pluginName = new RegExp(`^wangshen-kuaitian-plugin-${versionPattern}\\.zip$`);
@@ -20,14 +21,15 @@ export function selectDesktopRelease(releases) {
   const release = candidates[0]?.release;
   if (!release) throw new Error('没有找到桌面正式版');
   const version = release.tag_name.slice('desktop-v'.length);
-  const releaseUrl = `${repository}/releases/tag/${release.tag_name}`;
-  if (release.html_url !== releaseUrl) throw new Error('发布页地址不符合预期');
+  const releaseRepository = repositories.find(base => release.html_url === `${base}/releases/tag/${release.tag_name}`);
+  if (!releaseRepository) throw new Error('发布页地址不符合预期');
+  const releaseUrl = `${releaseRepository}/releases/tag/${release.tag_name}`;
   const assets = Array.isArray(release.assets) ? release.assets : [];
   function assetLink(matches) {
     const matched = assets.filter((asset) => matches(asset.name));
     if (matched.length !== 1) return null;
     const asset = matched[0];
-    const expected = `${repository}/releases/download/${release.tag_name}/${asset.name}`;
+    const expected = `${releaseRepository}/releases/download/${release.tag_name}/${asset.name}`;
     return asset.state === 'uploaded' && asset.size > 0 && asset.browser_download_url === expected
       ? { name: asset.name, url: expected } : null;
   }
