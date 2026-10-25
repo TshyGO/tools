@@ -15,6 +15,27 @@ function release(version, pluginVersion = version) {
   };
 }
 
+test('accepts migrated release and asset URLs while keeping strict repository boundaries', () => {
+  const migrated = release('0.4.5');
+  migrated.html_url = migrated.html_url.replace('/TshyGO/', '/ptjworks/');
+  for (const asset of migrated.assets) asset.browser_download_url = asset.browser_download_url.replace('/TshyGO/', '/ptjworks/');
+  const selected = selectDesktopRelease([release('0.4.4'), migrated]);
+  assert.equal(selected.version, '0.4.5');
+  assert.equal(selected.url, migrated.html_url);
+  assert.equal(selected.windows.url, migrated.assets[0].browser_download_url);
+  assert.equal(selected.mac.url, migrated.assets[1].browser_download_url);
+  assert.equal(selected.plugin.url, migrated.assets[2].browser_download_url);
+  for (const wrong of [
+    'https://github.com/ptjworks-other/resume-form-assistant-plugin/releases/tag/desktop-v0.4.5',
+    'https://github.com/ptjworks/resume-form-assistant-plugin-fork/releases/tag/desktop-v0.4.5',
+    'https://user:pass@github.com/ptjworks/resume-form-assistant-plugin/releases/tag/desktop-v0.4.5',
+    'https://github.com/ptjworks/resume-form-assistant-plugin/releases/tag/../../other',
+  ]) assert.throws(() => selectDesktopRelease([{ ...migrated, html_url: wrong }]));
+  const inconsistent = structuredClone(migrated);
+  inconsistent.assets[0].browser_download_url = inconsistent.assets[0].browser_download_url.replace('/ptjworks/', '/TshyGO/');
+  assert.equal(selectDesktopRelease([inconsistent]).windows, null);
+});
+
 test('numeric version selection excludes plugin releases, draft, beta and malformed tags', () => {
   const selected = selectDesktopRelease([
     release('0.9.0'), release('0.10.0', '0.8.2'),
@@ -38,6 +59,7 @@ test('incomplete newest release is not replaced with an older release', () => {
   newest.assets = newest.assets.filter(a => a.name.endsWith('.zip'));
   const selected = selectDesktopRelease([release('0.4.1'), newest]);
   assert.equal(selected.version, '0.5.0');
+  assert.ok(requested.every(url => url.startsWith('https://api.github.com/repositories/1217054301/releases?')));
   assert.equal(selected.windows, null);
   assert.equal(selected.mac, null);
   assert.ok(selected.plugin);
